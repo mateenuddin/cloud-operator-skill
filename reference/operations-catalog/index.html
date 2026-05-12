@@ -1,0 +1,3607 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Multi-cloud operator agent for AWS, GCP, and Azure — pricing, right-sizing, lifecycle, observability, IaC, AI/GPU.">
+      
+      
+      
+        <link rel="canonical" href="https://YOUR-USERNAME.github.io/cloud-operator-skill/reference/operations-catalog/">
+      
+      
+        <link rel="prev" href="../service-catalog/">
+      
+      
+        <link rel="next" href="../mindmap/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Operations catalog - Cloud Operator Skill</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cloud-operator-operations-catalog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cloud Operator Skill" class="md-header__button md-logo" aria-label="Cloud Operator Skill" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cloud Operator Skill
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Operations catalog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/YOUR-USERNAME/cloud-operator-skill" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cloud-operator-skill
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../skill/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  The Skill
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference Catalog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../evals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Eval Results
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cloud Operator Skill" class="md-nav__button md-logo" aria-label="Cloud Operator Skill" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cloud Operator Skill
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/YOUR-USERNAME/cloud-operator-skill" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cloud-operator-skill
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install the skill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/first-invocation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First invocation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud-operator concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../skill/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Skill
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    The Skill
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/SKILL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SKILL.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    References
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/aws-pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Pillar Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/gcp-pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCP Pillar Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/azure-pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure Pillar Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/pricing-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Pricing Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/mcp-availability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Availability Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/references/runbook-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill/evals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Catalog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference Catalog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../service-catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations catalog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-pricing-billing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Pricing &amp; Billing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Pricing &amp; Billing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Compute &amp; Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-compute-ec2-lambda-ecs-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS — Compute (EC2, Lambda, ECS, EKS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws-storage-s3-efs-fsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS — Storage (S3, EFS, FSx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP — Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure — Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-identity-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Identity &amp; Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Identity &amp; Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-management-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Management &amp; Observability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Management &amp; Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ai-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. AI / GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. AI / GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-actually-wirable-today-vs-tomorrow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's actually wirable today vs. tomorrow
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mindmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mindmap (interactive)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/expansion-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skill expansion roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/eval-methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eval methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding a new MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../evals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eval Results
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Eval Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evals/iteration-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iteration 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evals/iteration-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iteration 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-pricing-billing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Pricing &amp; Billing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Pricing &amp; Billing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Compute &amp; Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-compute-ec2-lambda-ecs-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS — Compute (EC2, Lambda, ECS, EKS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws-storage-s3-efs-fsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS — Storage (S3, EFS, FSx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP — Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-compute-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure — Compute &amp; Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-identity-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Identity &amp; Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Identity &amp; Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-management-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Management &amp; Observability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Management &amp; Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ai-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. AI / GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. AI / GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-actually-wirable-today-vs-tomorrow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's actually wirable today vs. tomorrow
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/YOUR-USERNAME/cloud-operator-skill/edit/main/docs/reference/operations-catalog.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="cloud-operator-operations-catalog">Cloud Operator Operations Catalog<a class="headerlink" href="#cloud-operator-operations-catalog" title="Permanent link">&para;</a></h1>
+<p>Operation-level catalog for the five priority capability areas. Each row = a concrete API call an agent could invoke.</p>
+<p><strong>MCP availability legend</strong> (status reflects the Cowork MCP registry as scanned today):
+- ✅ <strong>Connected today</strong> — wirable right now in this session
+- 🟡 <strong>Registry / upstream</strong> — MCP exists in this registry or is published upstream (AWS Labs, Microsoft Azure MCP, etc.) but not connected
+- ❌ <strong>No known MCP</strong> — would need a custom MCP wrapper around the SDK/CLI</p>
+<p>References used for upstream MCPs: AWS Labs <code>awslabs/mcp</code> (EC2, S3, Lambda, IAM, CloudFormation, CloudWatch, Cost Explorer, Bedrock-KB, etc.); Microsoft Azure MCP Server (Resource Manager, Cosmos, Storage, Key Vault, AKS); community Google Cloud MCPs (BigQuery, Compute Engine, Cloud Run).</p>
+<hr />
+<h2 id="1-pricing-billing">1. Pricing &amp; Billing<a class="headerlink" href="#1-pricing-billing" title="Permanent link">&para;</a></h2>
+<p>The most important area for the existing skill. Vantage covers most of the <em>list pricing</em> surface. The <em>actual spend</em> surface (Cost Explorer, billing exports) needs separate MCPs.</p>
+<h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_pricing_describe_services</code></td>
+<td>List all AWS services tracked in pricing</td>
+<td>🟡 AWS Labs cost-explorer MCP</td>
+</tr>
+<tr>
+<td><code>aws_pricing_get_attribute_values</code></td>
+<td>Get valid filter values per service (e.g. instanceType)</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_pricing_get_products</code></td>
+<td>Query SKU + price for any service</td>
+<td>🟡 AWS Labs (or use Vantage for compute/db)</td>
+</tr>
+<tr>
+<td><code>aws_ce_get_cost_and_usage</code></td>
+<td>Pull historical cost grouped by service/account/tag</td>
+<td>🟡 AWS Labs cost-explorer MCP</td>
+</tr>
+<tr>
+<td><code>aws_ce_get_cost_forecast</code></td>
+<td>Forecast next-N-day spend</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ce_get_reservation_utilization</code></td>
+<td>RI utilization for past period</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ce_get_savings_plans_utilization</code></td>
+<td>Savings Plans utilization</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ce_get_anomalies</code></td>
+<td>Listed cost anomalies detected</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_budgets_describe_budgets</code></td>
+<td>List configured budgets</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_budgets_create_budget</code></td>
+<td>Create new budget threshold</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_compute_optimizer_get_ec2_recommendations</code></td>
+<td>Right-sizing recs for EC2</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_compute_optimizer_get_ebs_recommendations</code></td>
+<td>Right-sizing recs for EBS</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_compute_optimizer_get_lambda_recommendations</code></td>
+<td>Right-sizing recs for Lambda</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_trustedadvisor_describe_checks</code></td>
+<td>All Trusted Advisor checks</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>aws_trustedadvisor_describe_check_result</code></td>
+<td>Result for one check</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>vantage_get_ec2_indexes</code></td>
+<td>Pre-filtered instance categories (RAM/vCPU/price/GPU)</td>
+<td>✅ Vantage (connected)</td>
+</tr>
+<tr>
+<td><code>vantage_use_ec2_index</code></td>
+<td>Instances matching an index</td>
+<td>✅ Vantage</td>
+</tr>
+<tr>
+<td><code>vantage_get_ec2_region_pricing</code></td>
+<td>Full pricing matrix for instance × region</td>
+<td>✅ Vantage</td>
+</tr>
+<tr>
+<td>(same shape) <code>vantage_*_rds</code>, <code>*_elasticache</code>, <code>*_opensearch</code>, <code>*_redshift</code></td>
+<td>Same pattern for other AWS pillars</td>
+<td>✅ Vantage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcp">GCP<a class="headerlink" href="#gcp" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcp_billing_list_billing_accounts</code></td>
+<td>List billing accounts</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_billing_get_project_billing_info</code></td>
+<td>Which billing account a project bills to</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_billing_list_services</code></td>
+<td>All GCP services with pricing</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_billing_list_skus</code></td>
+<td>SKUs for a service (pricing tier rows)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_billing_query_export_table</code></td>
+<td>SQL over BigQuery billing export</td>
+<td>🟡 BigQuery MCP (registered)</td>
+</tr>
+<tr>
+<td><code>gcp_billing_create_budget</code></td>
+<td>Create alert budget</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_recommender_list_recommendations</code></td>
+<td>Cost / security / perf / reliability recs</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_recommender_apply_recommendation</code></td>
+<td>Apply a recommendation</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>vantage_get_gcp_*</code></td>
+<td>Same pricing pattern as AWS for GCP compute</td>
+<td>✅ Vantage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="azure">Azure<a class="headerlink" href="#azure" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>azure_billing_list_billing_accounts</code></td>
+<td>Billing accounts visible</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_billing_query_costs</code></td>
+<td>Cost by subscription/resource group/tag</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_billing_get_invoice</code></td>
+<td>Get invoice doc for period</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_consumption_list_usage_details</code></td>
+<td>Per-resource detailed usage</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_costmanagement_query</code></td>
+<td>Custom cost query (Kusto-style)</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_costmanagement_create_budget</code></td>
+<td>Budget with alert rules</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_advisor_list_recommendations</code></td>
+<td>Cost / security / reliability / performance</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_reservations_list</code></td>
+<td>Existing reservations</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_savings_plans_list</code></td>
+<td>Compute Savings Plans</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_retail_prices_list</code></td>
+<td>Retail price lookup (no auth needed)</td>
+<td>🟡 (public REST API)</td>
+</tr>
+<tr>
+<td><code>vantage_get_azure_*</code></td>
+<td>Vantage Azure pricing pattern</td>
+<td>✅ Vantage</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-compute-storage">2. Compute &amp; Storage<a class="headerlink" href="#2-compute-storage" title="Permanent link">&para;</a></h2>
+<h3 id="aws-compute-ec2-lambda-ecs-eks">AWS — Compute (EC2, Lambda, ECS, EKS)<a class="headerlink" href="#aws-compute-ec2-lambda-ecs-eks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_ec2_describe_instances</code></td>
+<td>List EC2 instances with filters</td>
+<td>🟡 AWS Labs ec2-mcp</td>
+</tr>
+<tr>
+<td><code>aws_ec2_run_instances</code></td>
+<td>Launch new instance(s)</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_start_instances</code> / <code>stop_instances</code> / <code>terminate_instances</code></td>
+<td>Lifecycle</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_modify_instance_attribute</code></td>
+<td>Change instance type, sg, etc.</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_describe_images</code></td>
+<td>List AMIs</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_create_image</code></td>
+<td>Snapshot AMI from running instance</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_describe_volumes</code> / <code>attach_volume</code> / <code>detach_volume</code></td>
+<td>EBS volume ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_create_snapshot</code></td>
+<td>EBS snapshot</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_describe_security_groups</code> / <code>authorize_security_group_ingress</code></td>
+<td>SG rules</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_lambda_list_functions</code> / <code>get_function</code></td>
+<td>Function inventory</td>
+<td>🟡 AWS Labs lambda-mcp</td>
+</tr>
+<tr>
+<td><code>aws_lambda_invoke</code> / <code>create_function</code> / <code>update_function_code</code></td>
+<td>Run / deploy</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ecs_list_clusters</code> / <code>describe_clusters</code></td>
+<td>ECS inventory</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ecs_list_services</code> / <code>describe_services</code> / <code>update_service</code></td>
+<td>Service ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ecs_list_tasks</code> / <code>describe_tasks</code> / <code>run_task</code> / <code>stop_task</code></td>
+<td>Task ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ecs_register_task_definition</code></td>
+<td>New task def</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_eks_list_clusters</code> / <code>describe_cluster</code> / <code>get_cluster_health</code></td>
+<td>EKS cluster ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_eks_list_nodegroups</code> / <code>describe_nodegroup</code> / <code>update_nodegroup_config</code></td>
+<td>Worker node ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_eks_list_addons</code> / <code>describe_addon</code></td>
+<td>Cluster addons</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_eks_list_fargate_profiles</code> / <code>describe_fargate_profile</code></td>
+<td>Serverless k8s ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aws-storage-s3-efs-fsx">AWS — Storage (S3, EFS, FSx)<a class="headerlink" href="#aws-storage-s3-efs-fsx" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_s3_list_buckets</code></td>
+<td>List buckets</td>
+<td>🟡 AWS Labs s3-mcp</td>
+</tr>
+<tr>
+<td><code>aws_s3_create_bucket</code> / <code>delete_bucket</code></td>
+<td>Bucket lifecycle</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_s3_list_objects</code> / <code>get_object</code> / <code>put_object</code> / <code>delete_object</code></td>
+<td>Object ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_s3_get_bucket_policy</code> / <code>put_bucket_policy</code></td>
+<td>Bucket policy</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_s3_put_bucket_lifecycle_configuration</code></td>
+<td>Tier / expiration rules</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_s3_get_bucket_encryption</code> / <code>put_bucket_encryption</code></td>
+<td>SSE config</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_efs_describe_file_systems</code> / <code>create_file_system</code></td>
+<td>EFS inventory</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_fsx_describe_file_systems</code> / <code>create_file_system</code></td>
+<td>FSx ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_backup_list_backup_plans</code> / <code>start_backup_job</code></td>
+<td>Backup orchestration</td>
+<td>🟡 AWS Labs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcp-compute-storage">GCP — Compute &amp; Storage<a class="headerlink" href="#gcp-compute-storage" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcp_compute_list_instances</code></td>
+<td>List GCE instances</td>
+<td>🟡 GCE MCP (registry)</td>
+</tr>
+<tr>
+<td><code>gcp_compute_create_instance</code> / <code>delete_instance</code></td>
+<td>Lifecycle</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_start_instance</code> / <code>stop_instance</code> / <code>reset_instance</code></td>
+<td>Instance state</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_get_instance_basic_info</code></td>
+<td>Spec + status</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_set_instance_machine_type</code></td>
+<td>Resize</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_list_instance_attached_disks</code></td>
+<td>Disk inventory</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_attach_disk</code> / <code>detach_disk</code></td>
+<td>Disk ops</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_compute_create_disk</code> / <code>delete_disk</code></td>
+<td>PD lifecycle</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>gcp_storage_list_buckets</code> / <code>create_bucket</code> / <code>delete_bucket</code></td>
+<td>GCS bucket ops</td>
+<td>❌ (community MCPs exist)</td>
+</tr>
+<tr>
+<td><code>gcp_storage_list_objects</code> / <code>get_object</code> / <code>put_object</code></td>
+<td>Object ops</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_run_list_services</code> / <code>deploy_service</code> / <code>delete_service</code></td>
+<td>Cloud Run service ops</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_functions_list</code> / <code>deploy</code> / <code>call</code></td>
+<td>Cloud Functions</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_gke_list_clusters</code> / <code>create_cluster</code> / <code>delete_cluster</code></td>
+<td>GKE</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_gke_get_credentials</code></td>
+<td>kubeconfig fetch</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_filestore_list_instances</code></td>
+<td>Filestore inventory</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="azure-compute-storage">Azure — Compute &amp; Storage<a class="headerlink" href="#azure-compute-storage" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>azure_vm_list</code></td>
+<td>List VMs in subscription/resource group</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_vm_create_or_update</code></td>
+<td>Provision/modify VM</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_vm_start</code> / <code>power_off</code> / <code>restart</code> / <code>deallocate</code></td>
+<td>Lifecycle</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_vm_resize</code></td>
+<td>Change size</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_vmss_list</code> / <code>update_instances</code> / <code>scale</code></td>
+<td>Scale Set ops</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_disks_list</code> / <code>create_or_update</code> / <code>delete</code></td>
+<td>Managed disks</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_storage_list_blobs</code></td>
+<td>List blobs in container</td>
+<td>🟡 Azure MCP Server (Storage)</td>
+</tr>
+<tr>
+<td><code>azure_storage_create_container</code> / <code>delete_container</code></td>
+<td>Container ops</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_storage_upload_blob</code> / <code>download_blob</code> / <code>delete_blob</code></td>
+<td>Blob ops</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_storage_set_container_access_policy</code></td>
+<td>Access policy</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_files_list_shares</code> / <code>create_share</code></td>
+<td>Azure Files</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_aks_list_clusters</code> / <code>create_or_update</code> / <code>delete</code></td>
+<td>AKS cluster ops</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_aks_list_node_pools</code> / <code>update_node_pool</code></td>
+<td>Node pool ops</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_functions_list_apps</code> / <code>deploy_function</code></td>
+<td>Functions</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_appservice_list_webapps</code> / <code>restart</code> / <code>swap_slots</code></td>
+<td>App Service</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-identity-security">3. Identity &amp; Security<a class="headerlink" href="#3-identity-security" title="Permanent link">&para;</a></h2>
+<h3 id="aws_1">AWS<a class="headerlink" href="#aws_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_iam_list_users</code> / <code>get_user</code> / <code>create_user</code> / <code>delete_user</code></td>
+<td>User ops</td>
+<td>🟡 AWS Labs iam-mcp</td>
+</tr>
+<tr>
+<td><code>aws_iam_create_user_with_policy</code></td>
+<td>Convenience: user + initial policy</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_iam_list_roles</code> / <code>get_role</code> / <code>create_role</code> / <code>delete_role</code></td>
+<td>Role ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_iam_attach_user_policy</code> / <code>detach_user_policy</code></td>
+<td>User-policy bind</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_iam_attach_role_policy</code> / <code>detach_role_policy</code></td>
+<td>Role-policy bind</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_iam_pass_role</code></td>
+<td>Pass role to a service</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sts_assume_role</code> / <code>assume_role_with_saml</code> / <code>assume_role_with_web_identity</code></td>
+<td>Cross-account / federated</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sts_get_caller_identity</code></td>
+<td>Who am I</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_iam_simulate_principal_policy</code></td>
+<td>"Can principal X do action Y" reasoning</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_kms_list_keys</code> / <code>describe_key</code> / <code>create_key</code> / <code>schedule_key_deletion</code></td>
+<td>Key lifecycle</td>
+<td>🟡 AWS Labs kms-mcp</td>
+</tr>
+<tr>
+<td><code>aws_kms_encrypt</code> / <code>decrypt</code> / <code>generate_data_key</code></td>
+<td>Crypto ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_secrets_get_secret_value</code> / <code>put_secret_value</code> / <code>rotate_secret</code></td>
+<td>Secrets ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_acm_list_certificates</code> / <code>request_certificate</code></td>
+<td>Cert ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_guardduty_list_findings</code> / <code>get_findings</code></td>
+<td>Threat findings</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>aws_securityhub_get_findings</code> / <code>update_findings</code></td>
+<td>Aggregated findings</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcp_1">GCP<a class="headerlink" href="#gcp_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcp_iam_list_service_accounts</code> / <code>create</code> / <code>delete</code></td>
+<td>SA inventory</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_iam_get_iam_policy</code> / <code>set_iam_policy</code> (per-resource)</td>
+<td>Policy reads/writes</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_iam_test_iam_permissions</code></td>
+<td>"Can principal do action"</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_iam_create_role</code> / <code>update_role</code></td>
+<td>Custom role ops</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_resource_manager_list_projects</code> / <code>get_project</code></td>
+<td>Project tree</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_resource_manager_set_org_policy</code></td>
+<td>Org policy guardrails</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_kms_list_key_rings</code> / <code>list_crypto_keys</code></td>
+<td>KMS inventory</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_kms_encrypt</code> / <code>decrypt</code></td>
+<td>Crypto</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_secretmanager_list_secrets</code> / <code>access_secret_version</code> / <code>add_secret_version</code></td>
+<td>Secrets</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_certificate_manager_list_certificates</code></td>
+<td>Certs</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_scc_list_findings</code> / <code>update_finding</code></td>
+<td>Security Command Center</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="azure_1">Azure<a class="headerlink" href="#azure_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>azure_entra_list_users</code> / <code>get_user</code> / <code>create_user</code> / <code>delete_user</code></td>
+<td>Microsoft Entra ID users</td>
+<td>🟡 (Azure MCP Server / Microsoft Graph MCP)</td>
+</tr>
+<tr>
+<td><code>azure_entra_list_groups</code> / <code>add_member</code> / <code>remove_member</code></td>
+<td>Group ops</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_entra_list_role_assignments</code></td>
+<td>Directory role assignments</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_rbac_list_role_assignments</code> / <code>create</code> / <code>delete</code></td>
+<td>Subscription RBAC</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_rbac_list_role_definitions</code></td>
+<td>Built-in + custom roles</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_managed_identities_list</code></td>
+<td>Workload identities</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_keyvault_list_secrets</code> / <code>get_secret</code> / <code>set_secret</code></td>
+<td>Secrets</td>
+<td>🟡 Azure MCP Server (Key Vault)</td>
+</tr>
+<tr>
+<td><code>azure_keyvault_list_keys</code> / <code>create_key</code> / <code>encrypt</code> / <code>decrypt</code></td>
+<td>Keys</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_keyvault_list_certificates</code> / <code>import_certificate</code></td>
+<td>Certs</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_defender_list_alerts</code> / <code>dismiss_alert</code></td>
+<td>Defender for Cloud alerts</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_sentinel_run_query</code></td>
+<td>KQL query against Sentinel</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_policy_list_assignments</code> / <code>create_assignment</code></td>
+<td>Azure Policy</td>
+<td>🟡</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-management-observability">4. Management &amp; Observability<a class="headerlink" href="#4-management-observability" title="Permanent link">&para;</a></h2>
+<h3 id="aws_2">AWS<a class="headerlink" href="#aws_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_cloudformation_describe_stacks</code></td>
+<td>Stack list + status</td>
+<td>🟡 AWS Labs cfn-mcp</td>
+</tr>
+<tr>
+<td><code>aws_cloudformation_create_stack</code> / <code>update_stack</code> / <code>delete_stack</code></td>
+<td>Stack lifecycle</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudformation_describe_stack_events</code></td>
+<td>Recent events for debugging</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudformation_detect_stack_drift</code> / <code>describe_stack_resource_drifts</code></td>
+<td>Drift detection</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cdk_synth</code> / <code>cdk_diff</code> / <code>cdk_deploy</code></td>
+<td>CDK lifecycle (via wrapper)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>aws_ssm_describe_instance_information</code></td>
+<td>Inventory of SSM-managed nodes</td>
+<td>🟡 AWS Labs ssm-mcp</td>
+</tr>
+<tr>
+<td><code>aws_ssm_send_command</code></td>
+<td>Run shell command on instances</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ssm_get_parameter</code> / <code>put_parameter</code></td>
+<td>Parameter Store</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ssm_start_session</code></td>
+<td>Session Manager session</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_config_describe_compliance_by_resource</code></td>
+<td>Compliance state</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>aws_cloudtrail_lookup_events</code></td>
+<td>Audit log search</td>
+<td>🟡 AWS Labs cloudtrail-mcp</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_get_metric_data</code></td>
+<td>Time-series metrics</td>
+<td>🟡 AWS Labs cloudwatch-mcp</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_get_metric_statistics</code></td>
+<td>Aggregated metrics</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_describe_alarms</code></td>
+<td>Alarm inventory + state</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_set_alarm_state</code></td>
+<td>Force alarm state (testing)</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_logs_filter_log_events</code></td>
+<td>Search log streams</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_cloudwatch_logs_start_query</code> / <code>get_query_results</code></td>
+<td>Logs Insights query</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_xray_get_trace_summaries</code> / <code>batch_get_traces</code></td>
+<td>Distributed tracing</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_eventbridge_list_rules</code> / <code>put_rule</code> / <code>put_targets</code></td>
+<td>Event routing</td>
+<td>🟡 AWS Labs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcp_2">GCP<a class="headerlink" href="#gcp_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcp_deployment_manager_list_deployments</code> / <code>insert</code> / <code>delete</code></td>
+<td>Native IaC</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_config_connector_apply_yaml</code></td>
+<td>Manage GCP via k8s CRDs</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_asset_search_all_resources</code></td>
+<td>Cloud Asset Inventory cross-resource search</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_asset_export_assets</code></td>
+<td>Snapshot to BQ/GCS</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_logging_list_log_entries</code></td>
+<td>Cloud Logging query</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_logging_write_log_entries</code></td>
+<td>Append to a log</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_monitoring_list_time_series</code></td>
+<td>Metric query</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_monitoring_create_alert_policy</code></td>
+<td>Alerting</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_trace_list_traces</code> / <code>get_trace</code></td>
+<td>Distributed tracing</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_profiler_list_profiles</code></td>
+<td>Continuous profiler</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_error_reporting_list_events</code> / <code>list_groups</code></td>
+<td>Error reporting</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_audit_log_query</code> (subset of logging)</td>
+<td>Cloud Audit Logs</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_eventarc_list_triggers</code> / <code>create_trigger</code></td>
+<td>Event routing</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_workflows_create</code> / <code>execute</code> / <code>get_execution</code></td>
+<td>Workflow orchestration</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="azure_2">Azure<a class="headerlink" href="#azure_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>azure_resource_manager_list_resource_groups</code> / <code>create</code> / <code>delete</code></td>
+<td>RG lifecycle</td>
+<td>🟡 Azure MCP Server</td>
+</tr>
+<tr>
+<td><code>azure_resource_manager_list_resources</code></td>
+<td>Per-RG resource list</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_arm_deploy_template</code></td>
+<td>Deploy ARM/Bicep template</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_arm_what_if</code></td>
+<td>Preview deployment changes</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_resource_graph_query</code></td>
+<td>Cross-subscription Kusto query</td>
+<td>🟡 (this is a marquee one)</td>
+</tr>
+<tr>
+<td><code>azure_policy_evaluate</code> / <code>list_compliance_states</code></td>
+<td>Policy compliance</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_arc_list_machines</code></td>
+<td>Arc-enabled servers</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_lighthouse_list_assignments</code></td>
+<td>Multi-tenant delegation</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_automation_list_runbooks</code> / <code>start_runbook</code></td>
+<td>Automation runbooks</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_monitor_query_metrics</code></td>
+<td>Metric query</td>
+<td>🟡 Azure MCP Server (Monitor)</td>
+</tr>
+<tr>
+<td><code>azure_monitor_query_logs</code></td>
+<td>KQL log query</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_monitor_list_alerts</code> / <code>update_alert</code></td>
+<td>Alert ops</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_application_insights_query</code></td>
+<td>App Insights KQL</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_eventgrid_list_topics</code> / <code>publish_event</code></td>
+<td>Event Grid</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_logicapps_list_workflows</code> / <code>trigger</code></td>
+<td>Logic Apps</td>
+<td>🟡</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-ai-gpu">5. AI / GPU<a class="headerlink" href="#5-ai-gpu" title="Permanent link">&para;</a></h2>
+<p>The newest priority area. Distinguish three sub-capabilities: (a) <strong>foundation-model invocation</strong> (Bedrock / Vertex / Azure OpenAI), (b) <strong>ML platform</strong> (SageMaker / Vertex AI / Azure ML), (c) <strong>GPU compute provisioning</strong> (EC2 P/G families + Vantage GPU indexes; GCE A2/G2; Azure ND/NC/NV).</p>
+<h3 id="aws_3">AWS<a class="headerlink" href="#aws_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_bedrock_list_foundation_models</code></td>
+<td>Available FMs in account/region</td>
+<td>🟡 AWS Labs bedrock-mcp</td>
+</tr>
+<tr>
+<td><code>aws_bedrock_invoke_model</code></td>
+<td>Direct model invocation</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_bedrock_invoke_model_with_response_stream</code></td>
+<td>Streamed invocation</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_bedrock_get_model_invocation_logging_configuration</code></td>
+<td>Logging config</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_bedrock_agent_create_agent</code> / <code>prepare_agent</code> / <code>invoke_agent</code></td>
+<td>Bedrock Agents</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_bedrock_kb_create_knowledge_base</code> / <code>retrieve</code></td>
+<td>Knowledge Base ops</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_list_endpoints</code> / <code>describe_endpoint</code></td>
+<td>Inference endpoints</td>
+<td>🟡 AWS Labs sagemaker-mcp</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_create_endpoint</code> / <code>update_endpoint</code> / <code>delete_endpoint</code></td>
+<td>Endpoint lifecycle</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_invoke_endpoint</code></td>
+<td>Inference call</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_create_training_job</code> / <code>describe_training_job</code></td>
+<td>Training</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_create_processing_job</code></td>
+<td>Data processing</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_sagemaker_list_models</code> / <code>create_model</code></td>
+<td>Model registry</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_ec2_describe_instances</code> (filter GPU)</td>
+<td>Find GPU instances</td>
+<td>🟡 (covered above)</td>
+</tr>
+<tr>
+<td><code>vantage_use_ec2_index</code> (<code>has-1-gpu</code> etc.)</td>
+<td>Pre-filtered GPU instance lists</td>
+<td>✅ Vantage</td>
+</tr>
+<tr>
+<td><code>aws_comprehend_detect_entities</code> / <code>detect_sentiment</code></td>
+<td>NLP</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_rekognition_detect_labels</code> / <code>detect_faces</code></td>
+<td>Vision</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_textract_analyze_document</code> / <code>start_document_analysis</code></td>
+<td>OCR + structured extract</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_transcribe_start_transcription_job</code></td>
+<td>Speech-to-text</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_polly_synthesize_speech</code></td>
+<td>Text-to-speech</td>
+<td>🟡 AWS Labs</td>
+</tr>
+<tr>
+<td><code>aws_translate_translate_text</code></td>
+<td>MT</td>
+<td>🟡 AWS Labs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcp_3">GCP<a class="headerlink" href="#gcp_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcp_vertex_list_models</code> / <code>get_model</code></td>
+<td>Vertex Model Registry</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vertex_deploy_model</code> / <code>undeploy_model</code></td>
+<td>Endpoint deployment</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vertex_predict</code> / <code>raw_predict</code></td>
+<td>Inference</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vertex_list_endpoints</code> / <code>create_endpoint</code></td>
+<td>Endpoint inventory</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vertex_create_custom_job</code> / <code>cancel_custom_job</code></td>
+<td>Training jobs</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vertex_create_pipeline_run</code></td>
+<td>Pipelines</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_gemini_generate_content</code></td>
+<td>Gemini API direct</td>
+<td>❌ (community)</td>
+</tr>
+<tr>
+<td><code>gcp_automl_create_dataset</code> / <code>import_data</code> / <code>train</code></td>
+<td>AutoML lifecycle</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_compute_list_instances</code> (filter accelerator)</td>
+<td>Find GPU/TPU instances</td>
+<td>🟡 GCE MCP</td>
+</tr>
+<tr>
+<td><code>vantage_use_gcp_index</code> (gpu indexes)</td>
+<td>Pre-filtered GPU instances</td>
+<td>✅ Vantage</td>
+</tr>
+<tr>
+<td><code>gcp_speech_recognize</code> / <code>long_running_recognize</code></td>
+<td>Speech-to-Text</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_translate_translate_text</code></td>
+<td>Translation</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_vision_annotate_image</code></td>
+<td>Vision API</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_documentai_process_document</code></td>
+<td>Doc AI</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>gcp_dialogflow_detect_intent</code> / <code>streaming_detect_intent</code></td>
+<td>Conversational AI</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="azure_3">Azure<a class="headerlink" href="#azure_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What it does</th>
+<th>MCP availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>azure_openai_list_deployments</code></td>
+<td>Deployed model endpoints</td>
+<td>🟡 Azure MCP Server / Azure OpenAI MCP</td>
+</tr>
+<tr>
+<td><code>azure_openai_create_deployment</code> / <code>delete_deployment</code></td>
+<td>Deployment lifecycle</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_openai_chat_completions</code></td>
+<td>Chat inference</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_openai_embeddings</code></td>
+<td>Embedding inference</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_openai_audio_transcriptions</code> / <code>audio_translations</code></td>
+<td>Whisper</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_aifoundry_list_projects</code> / <code>list_models</code></td>
+<td>AI Foundry inventory</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_ml_list_workspaces</code> / <code>list_endpoints</code> / <code>invoke_endpoint</code></td>
+<td>Azure ML</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_ml_create_job</code> / <code>cancel_job</code></td>
+<td>Training jobs</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_ml_list_models</code> / <code>register_model</code></td>
+<td>Model registry</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_aisearch_search</code> / <code>index_documents</code></td>
+<td>AI Search (vector + keyword)</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_vision_analyze_image</code></td>
+<td>AI Vision</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_speech_recognize</code> / <code>synthesize</code></td>
+<td>AI Speech</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_doc_intelligence_analyze</code></td>
+<td>Document Intelligence</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_translator_translate</code></td>
+<td>Translator</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td><code>azure_vm_list</code> (filter <code>Standard_NC*</code>/<code>ND*</code>/<code>NV*</code>)</td>
+<td>Find GPU VMs</td>
+<td>🟡 (covered above)</td>
+</tr>
+<tr>
+<td><code>vantage_use_azure_index</code> (gpu)</td>
+<td>Pre-filtered GPU VMs</td>
+<td>✅ Vantage</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="whats-actually-wirable-today-vs-tomorrow">What's actually wirable today vs. tomorrow<a class="headerlink" href="#whats-actually-wirable-today-vs-tomorrow" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wirable today (Vantage)</strong></td>
+<td>List pricing + instance specs across AWS EC2/RDS/ElastiCache/OpenSearch/Redshift, plus Azure and GCP compute. Used as Pattern A/B/C in the existing skill.</td>
+</tr>
+<tr>
+<td><strong>Wirable with one connect</strong> (Cowork registry)</td>
+<td>GCE VM management (29+ tools), BigQuery SQL, AWS Marketplace discovery. <em>No general AWS / Azure management MCP appears in the registry yet.</em></td>
+</tr>
+<tr>
+<td><strong>Wirable upstream</strong> (would need plugin install)</td>
+<td>AWS Labs <code>awslabs/mcp</code> (~30 servers), Microsoft Azure MCP Server, community GCP MCPs (Cloud Run, GKE, Cloud Logging). These are mature; we'd need to add them as plugins.</td>
+</tr>
+<tr>
+<td><strong>Custom-build today</strong></td>
+<td>Anything in the ❌ rows above — wrap the AWS / GCP / Azure SDK in a small MCP. Cheapest for narrow jobs (e.g. only 5 ops).</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      MIT licensed. © cloud-operator-skill contributors.
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/YOUR-USERNAME/cloud-operator-skill" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

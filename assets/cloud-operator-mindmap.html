@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cloud Operator Toolset - AWS / GCP / Azure mindmap</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #fafaf7; color: #222; }
+  header { padding: 16px 24px; border-bottom: 1px solid #e5e2d9; background: #fff; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { margin: 0; font-size: 16px; font-weight: 600; }
+  header .meta { font-size: 12px; color: #666; }
+  main { padding: 24px; }
+  .wrap { width: 100%; overflow: auto; background: #fff; border: 1px solid #e5e2d9; border-radius: 6px; padding: 16px; }
+  .mermaid { min-width: 2400px; }
+  details { margin-top: 24px; background: #fff; border: 1px solid #e5e2d9; border-radius: 6px; padding: 12px 16px; }
+  summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+  pre { font-family: ui-monospace, Menlo, monospace; font-size: 11px; background: #f6f3ec; padding: 12px; border-radius: 4px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cloud Operator Toolset — AWS / GCP / Azure</h1>
+  <div class="meta">283-node mindmap · pinch / scroll-wheel to zoom · drag to pan</div>
+</header>
+<main>
+  <div class="wrap">
+    <pre class="mermaid" id="diagram">
+mindmap
+  root((Cloud Operator Tools))
+    AWS
+      Pricing and Billing
+        Pricing API
+        Cost Explorer
+        Cost and Usage Reports
+        Budgets
+        Cost Anomaly Detection
+        Compute Optimizer
+        Trusted Advisor
+        Savings Plans
+      Compute
+        EC2
+        Lambda
+        ECS
+        EKS
+        Fargate
+        Batch
+        Lightsail
+        App Runner
+      Storage
+        S3
+        EBS
+        EFS
+        FSx
+        Storage Gateway
+        Glacier
+        AWS Backup
+      Database
+        RDS
+        Aurora
+        DynamoDB
+        ElastiCache
+        Redshift
+        DocumentDB
+        Neptune
+        Timestream
+      Networking
+        VPC
+        Route 53
+        CloudFront
+        API Gateway
+        ELB
+        Direct Connect
+        Transit Gateway
+        Global Accelerator
+      Identity and Security
+        IAM
+        Organizations
+        KMS
+        Secrets Manager
+        GuardDuty
+        WAF
+        Shield
+        Security Hub
+        Inspector
+      Management and DevOps
+        CloudFormation
+        CDK
+        Systems Manager
+        Config
+        CloudTrail
+        Service Catalog
+        Control Tower
+        CodePipeline
+      Observability
+        CloudWatch
+        X-Ray
+        EventBridge
+        Managed Grafana
+        Managed Prometheus
+      Analytics
+        Athena
+        Glue
+        EMR
+        Kinesis
+        MSK
+        OpenSearch
+        QuickSight
+        Lake Formation
+      Machine Learning
+        SageMaker
+        Bedrock
+        Comprehend
+        Rekognition
+        Textract
+        Q
+      Integration
+        SNS
+        SQS
+        Step Functions
+        AppFlow
+        EventBridge Pipes
+    GCP
+      Pricing and Billing
+        Cloud Billing API
+        BigQuery Billing Export
+        Pricing Calculator
+        Budgets
+        Recommender
+        Active Assist
+        CUDs
+        Carbon Footprint
+      Compute
+        Compute Engine
+        Cloud Run
+        Cloud Functions
+        GKE Standard
+        GKE Autopilot
+        App Engine
+        Cloud Batch
+        Cloud Workstations
+      Storage
+        Cloud Storage
+        Persistent Disk
+        Hyperdisk
+        Filestore
+        Transfer Service
+        NetApp Volumes
+        Backup and DR
+      Database
+        Cloud SQL
+        AlloyDB
+        Spanner
+        Firestore
+        Bigtable
+        Memorystore
+        BigQuery
+        Datastream
+      Networking
+        VPC
+        Cloud Load Balancing
+        Cloud CDN
+        Cloud DNS
+        Cloud Interconnect
+        Cloud NAT
+        Cloud Armor
+        Service Directory
+      Identity and Security
+        Cloud IAM
+        Resource Manager
+        Cloud Identity
+        IAP
+        Cloud KMS
+        Secret Manager
+        Identity Platform
+        Security Command Center
+        Binary Authorization
+      Management and DevOps
+        Deployment Manager
+        Config Connector
+        Cloud Asset Inventory
+        Cloud Build
+        Cloud Deploy
+        Artifact Registry
+        Organization Policy
+        Cloud Shell
+      Observability
+        Cloud Monitoring
+        Cloud Logging
+        Cloud Trace
+        Cloud Profiler
+        Error Reporting
+        Personalized Service Health
+      Analytics
+        BigQuery
+        Dataflow
+        Dataproc
+        Pub Sub
+        Looker
+        Data Fusion
+        Dataplex
+        Analytics Hub
+      Machine Learning
+        Vertex AI
+        Gemini API
+        AutoML
+        Document AI
+        Speech APIs
+        Vision AI
+        Dialogflow
+      Integration
+        Pub Sub
+        Cloud Tasks
+        Workflows
+        Eventarc
+        Cloud Scheduler
+        Apigee
+    Azure
+      Pricing and Billing
+        Cost Management Billing
+        Pricing Calculator
+        Advisor
+        Reservations
+        Savings Plans
+        Hybrid Benefit
+        Carbon Optimization
+      Compute
+        Virtual Machines
+        VM Scale Sets
+        Functions
+        App Service
+        AKS
+        Container Instances
+        Container Apps
+        Batch
+      Storage
+        Blob Storage
+        Files
+        Disk Storage
+        NetApp Files
+        Data Lake Storage Gen2
+        Backup
+        Site Recovery
+      Database
+        SQL Database
+        Database for PostgreSQL
+        Database for MySQL
+        Cosmos DB
+        Cache for Redis
+        Synapse SQL Pool
+      Networking
+        Virtual Network
+        Load Balancer
+        Application Gateway
+        Front Door
+        CDN
+        ExpressRoute
+        VPN Gateway
+        Azure DNS
+        Azure Firewall
+        Private Link
+      Identity and Security
+        Microsoft Entra ID
+        Permissions Management
+        RBAC
+        Managed Identities
+        Key Vault
+        Defender for Cloud
+        Sentinel
+        Policy
+        Purview
+      Management and DevOps
+        Resource Manager
+        Bicep
+        Resource Graph
+        Lighthouse
+        Blueprints
+        Automation
+        Arc
+        Azure DevOps
+        GitHub Actions
+      Observability
+        Monitor
+        Log Analytics
+        Application Insights
+        Service Health
+        Managed Grafana
+        Managed Prometheus
+      Analytics
+        Synapse Analytics
+        Microsoft Fabric
+        Data Factory
+        Stream Analytics
+        Event Hubs
+        HDInsight
+        Databricks
+        Power BI
+      Machine Learning
+        AI Foundry
+        Azure OpenAI
+        Azure ML
+        AI Vision
+        AI Speech
+        Document Intelligence
+        AI Search
+      Integration
+        Service Bus
+        Event Grid
+        Logic Apps
+        API Management
+        Relay
+    </pre>
+  </div>
+  <details>
+    <summary>Show raw mermaid source</summary>
+    <pre id="src"></pre>
+  </details>
+</main>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#fff7e6',
+      primaryTextColor: '#222',
+      primaryBorderColor: '#d29',
+      lineColor: '#888',
+      fontFamily: 'inherit',
+      fontSize: '13px'
+    },
+    mindmap: { padding: 8 }
+  });
+
+  // copy raw source for the details pane
+  const raw = document.getElementById('diagram').textContent;
+  document.getElementById('src').textContent = raw;
+
+  // render
+  const el = document.getElementById('diagram');
+  const { svg } = await mermaid.render('mm', raw);
+  el.outerHTML = svg;
+</script>
+</body>
+</html>
