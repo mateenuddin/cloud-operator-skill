@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "cloud-operator (iteration 2)", "runs": [{"id": "eval-1-ec2-cost-lookup-spot-vs-ondemand-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# EC2 Spot vs On-Demand Analysis: m5.2xlarge in us-east-2\n\n## Executive Summary\n\nFor your batch ETL workload running 8 hours/day on m5.2xlarge Linux instances in us-east-2, Spot can save you **~$1,860/year (78% discount)**, reducing from $2,382/year on-demand to ~$522/year with Spot. Given your 20-minute restart window and restartable architecture, **Spot is a good fit** \u2014 but monitor the **>20% interrupt frequency** in this region, which means roughly one eviction per week.\n\n---\n\n## Pricing Comparison\n\n### Hourly Rates (Linux, m5.2xlarge, us-east-2)\n\n| Pricing Model | Hourly | Per 8h/day | Monthly (20 work days) | Annual |\n|---|---|---|---|---|\n| **On-Demand** | $0.384/hr | $3.07 | $61.44 | $2,382 |\n| **Spot Min** | $0.0775/hr | $0.62 | $12.40 | $480 |\n| **Spot Avg** | $0.087/hr | $0.70 | $13.94 | $541 |\n| **Spot Max** | $0.0943/hr | $0.75 | $15.06 | $583 |\n\n### Savings Potential\n\n- **Spot Avg vs On-Demand:** 77% hourly discount \u2192 $1,841/year savings\n- **Spot Max vs On-Demand:** 75% hourly discount \u2192 $1,799/year savings\n- **Risk:** Spot Interrupt Frequency = **>20%** (one eviction roughly every 5 days)\n\n---\n\n## Workload Fit Assessment\n\n**Spot is appropriate for your ETL because:**\n\n1. **Restartable from scratch in 20 min** \u2014 well within AWS Spot's 2-minute eviction grace period. You lose at most one job run (~8 hours of work + 20-min restart overhead).\n2. **Stateless batch processing** \u2014 no persistent state between rows to lose.\n3. **Fault-tolerant by design** \u2014 no orchestration complexity for retries.\n\n**Caveats:**\n\n1. **>20% interrupt frequency in us-east-2** \u2014 highest tier. Expect roughly 1 eviction per 5 days (22% frequency). Over a year, that's ~73 unexpected restarts.\n2. **Cost of evictions** \u2014 Each eviction loses 8 hours of ETL progress + 20 min restart. At ~$3/restart in wasted compute (worst case), ~$220/year in retry cost. Still net positive vs on-demand.\n3. **Job queueing impact** \u2014 If you're load-balancing across multiple Spot instances, evictions reduce total throughput. Ensure your cluster auto-scales back quickly.\n\n---\n\n## Recommendation\n\n**Use Spot for this workload**, but with guardrails:\n\n1. **Set up Spot interruption notifications** \u2014 AWS sends EC2 Instance Rebalance Recommendations 30 seconds before eviction. Capture logs early if possible.\n2. **Implement exponential backoff for retries** \u2014 Prevent hammering the scheduler on cascading Spot interruptions.\n3. **Monitor weekly eviction counts** \u2014 If frequency exceeds >25%, evaluate moving to a different instance family or (less likely) accepting slightly higher on-demand costs.\n4. **Consider Compute Savings Plan as hybrid** \u2014 If you want to lower risk without losing all discount: 1-year Compute Savings Plan = **$0.265/hr** (31% off on-demand, zero interrupt risk). That's $1,320/year vs $2,382 on-demand \u2014 a good middle ground if >20% interrupt is too aggressive for ops comfort.\n\n---\n\n## Implementation Checklist\n\n- [ ] Enable Spot interruption notifications in EC2 settings\n- [ ] Add retry logic with exponential backoff (max 3 retries per job)\n- [ ] Set up CloudWatch alarm: trigger if eviction rate > 15% over 7-day window\n- [ ] Log all evictions to a separate CloudWatch Logs stream\n- [ ] Measure actual interrupt frequency for us-east-2/m5.2xlarge over 30 days (may vary)\n- [ ] Document fallback: if frequency >25%, switch to Savings Plan or on-demand\n\n---\n\n## Cost Impact Summary\n\n| Scenario | Annual Cost | vs On-Demand |\n|---|---|---|\n| On-Demand | $2,382 | \u2014 |\n| Spot (avg pricing) | $541 | -$1,841 (-77%) |\n| Spot with retry losses | ~$761 | -$1,621 (-68%) |\n| 1yr Compute Savings Plan | $1,320 | -$1,062 (-45%) |\n\n**Bottom line:** Spot saves ~$1.6k/year net after accounting for retry overhead. The >20% interrupt frequency is high but manageable for a restartable batch job with your recovery time.\n"}], "grading": {"expectations": [{"text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2", "passed": true, "evidence": "Both instance and region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "$0.384/hr on-demand range found"}, {"text": "Reports a specific Spot price", "passed": true, "evidence": "Spot $0.0xx/hr present"}, {"text": "Surfaces the Spot interrupt frequency rating from Vantage", "passed": true, "evidence": ">20% interrupt frequency surfaced"}, {"text": "Recommends Spot for restartable batch", "passed": true, "evidence": "Pro-Spot recommendation"}, {"text": "Does not dump full Windows / SQL / Dedicated rows", "passed": true, "evidence": "Filtered output"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}}}, {"id": "eval-1-ec2-cost-lookup-spot-vs-ondemand-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# Spot vs On-Demand Analysis: m5.2xlarge in us-east-2\n\n## Current Costs (On-Demand Linux)\n- **On-Demand rate:** $0.384/hr\n- **Daily cost (8 hours):** $3.07\n- **Monthly cost (22 business days):** ~$67.65\n- **Annual cost:** ~$811.80\n\n## Spot Instance Pricing\n- **Spot average rate:** $0.0869/hr (77% cheaper)\n- **Daily cost (8 hours):** $0.69\n- **Monthly cost (22 business days):** ~$15.24\n- **Annual cost:** ~$182.88\n\n## Savings Potential\n- **Daily savings:** $2.38 (77% reduction)\n- **Annual savings:** ~$629/year\n- **Breakeven on a single 20-minute restart:** After just ~9 interruptions/month\n\n## Should You Use Spot? YES, with caveats.\n\n**Strong fits:**\n1. **Your 20-minute restart window is the key win** \u2014 at average Spot prices, you'd need ~20 interruptions per month to break even on restart costs. For m5 instances in us-east-2, interruption rates are typically <20%, meaning you're likely to have fewer than 3 per month.\n2. **Stateless design** \u2014 since the entire job is restartable from scratch, you have minimal risk exposure.\n3. **Batch workload** \u2014 no SLAs or real-time requirements mean brief interruptions won't cascade into failures.\n4. **Massive cost leverage** \u2014 77% savings makes even occasional restarts worth it.\n\n**Watch-outs:**\n- **Spot price volatility** \u2014 max price in us-east-2 is $0.0945/hr; avg should be stable, but check your CloudWatch metrics after a few weeks.\n- **High interruption frequency** \u2014 if you're consistently seeing >20% interruption rate (visible in your Spot Request history), that's the signal to reconsider.\n- **Peak hours** \u2014 Spot prices spike during regional demand spikes; batch your ETL off-peak if flexibility allows.\n\n## Recommended Approach\n**Use Spot as your default**, but:\n1. Set up CloudWatch alerts if Spot price approaches $0.12/hr (your break-even comfort zone)\n2. Keep a 1\u20132 on-demand instance on standby for time-sensitive runs\n3. Monitor interruption frequency for the first month \u2014 if it exceeds 25%, consider mixing strategies (Spot + Reserved Instances)\n\nYour 20-minute restart penalty is small enough that Spot is almost certainly the right call here.\n"}], "grading": {"expectations": [{"text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2", "passed": true, "evidence": "Both instance and region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "$0.384/hr on-demand range found"}, {"text": "Reports a specific Spot price", "passed": true, "evidence": "Spot $0.0xx/hr present"}, {"text": "Surfaces the Spot interrupt frequency rating from Vantage", "passed": true, "evidence": ">20% interrupt frequency surfaced"}, {"text": "Recommends Spot for restartable batch", "passed": true, "evidence": "Pro-Spot recommendation"}, {"text": "Does not dump full Windows / SQL / Dedicated rows", "passed": true, "evidence": "Filtered output"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}}}, {"id": "eval-2-ec2-right-sizing-with-constraints-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# AWS EC2 Right-Sizing for Memory-Heavy ML Inference\n\n## Recommendation\n\n**Use g6e.2xlarge in us-west-2** at $2.24/hr on-demand (under your $3/hr budget).\n\n### Primary Option: g6e.2xlarge\n- **vCPUs/RAM/GPU:** 8 vCPU, 64 GB RAM, 1x NVIDIA L40S GPU (48 GB VRAM)\n- **On-Demand Cost:** $2.24/hr \u2192 $1,635/month (730 hours)\n- **GPU Specs:** L40S is current-gen, optimized for inference with high tensor performance (Compute Capability 8.9); 48 GB VRAM handles large models\n- **Why:** Exactly meets 64 GB RAM floor, L40S excels at inference latency, comes in under budget with room for committed pricing\n\n### Alternative: g5.4xlarge\n- **vCPUs/RAM/GPU:** 16 vCPU, 64 GB RAM, 1x NVIDIA A10G GPU (24 GB VRAM)\n- **On-Demand Cost:** $1.624/hr \u2192 $1,185/month\n- **Trade-off:** Cheaper CPU and $439/month less, but A10G has only 24 GB VRAM (limits model size for inference). Better if your model fits <24 GB.\n\n## Cost Comparison Table\n\n| Instance | vCPU | RAM | GPU | VRAM | On-Demand $/hr | Monthly* | GPU Type |\n|---|---|---|---|---|---|---|\n| **g6e.2xlarge** | 8 | 64 GB | 1 | 48 GB | **$2.24** | **$1,635** | L40S (inference optimized) |\n| g5.4xlarge | 16 | 64 GB | 1 | 24 GB | $1.62 | $1,185 | A10G (general compute) |\n\n*730 hours = typical monthly on-demand; savings plans available for 40-50% discount.\n\n## Decision Logic\n\n1. **g6e.2xlarge wins for inference** if your models exceed 24 GB \u2014 the 48 GB L40S is built for latency-critical inference and tensor operations.\n2. **g5.4xlarge wins on cost** if your largest model stays under 24 GB \u2014 $450/month cheaper, still meets RAM/GPU baseline.\n3. **Consider Savings Plans:** Either instance on a 3yr all-upfront SP saves 62-63%, bringing g6e to ~$0.84/hr ($613/mo) and g5 to ~$0.61/hr ($445/mo).\n\n## Implementation Notes\n\n- Both are current-generation instances in us-west-2\n- Spot pricing available (10-15% interrupt frequency for g6e, >20% for g5) if workload is fault-tolerant\n- g6e includes 450 GB NVMe SSD + 20 Gbps network; g5 includes 600 GB SSD + 25 Gbps\n- For steady-state inference 24/7, 3yr Savings Plan is strongly recommended (break-even ~6 months)\n"}], "grading": {"expectations": [{"text": "Consults indexes / multiple candidates", "passed": true, "evidence": "2 unique GPU instances mentioned"}, {"text": "Filters by both RAM and GPU constraints", "passed": true, "evidence": "64 GB and GPU referenced"}, {"text": "Filters by under-$3/hr on-demand band", "passed": true, "evidence": "Budget acknowledged"}, {"text": "Compares >= 2 finalist instance types", "passed": true, "evidence": "Instances: ['g5.4xlarge', 'g6e.2xlarge']"}, {"text": "us-west-2 referenced", "passed": true, "evidence": "Region present"}, {"text": "Recommends current-gen (not g3/g2/p2)", "passed": true, "evidence": "No old-gen GPU families"}, {"text": "Produces a comparison table", "passed": true, "evidence": "35 pipe chars"}, {"text": "Reports actual specs and prices", "passed": true, "evidence": "0 dollar values"}, {"text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)", "passed": true, "evidence": "GPU type named"}], "summary": {"passed": 9, "failed": 0, "total": 9, "pass_rate": 1.0}}}, {"id": "eval-2-ec2-right-sizing-with-constraints-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# EC2 Instance Selection for Memory-Heavy ML Inference\n\n## Recommendation: g6e.4xlarge\n\nYour best option is the **g6e.4xlarge** instance running on Linux in us-west-2.\n\n**Why this works:**\n- **RAM**: 128 GiB system memory (exceeds 64 GB requirement)\n- **GPU**: 1x NVIDIA L40S GPU with 48 GB VRAM (meets GPU requirement)\n- **Current generation**: Yes (G6e family)\n- **Cost**: $3.00/hr on-demand (just above your $3/hr budget but closest fit)\n\n### Key Specifications (g6e.4xlarge)\n- vCPUs: 16\n- System Memory: 128 GiB\n- GPU VRAM: 48 GiB (L40S)\n- Storage: 600 GiB NVMe SSD\n- Network: 20 Gbps bandwidth\n- EBS Optimization: Yes (1000 MB/s throughput)\n\n---\n\n## Alternative Option: g6.12xlarge\n\nIf you can increase your budget, the **g6.12xlarge** is excellent for scale:\n\n**Cost**: $4.60/hr on-demand (33% more expensive)\n\n**Specifications:**\n- vCPUs: 48\n- System Memory: 192 GiB\n- GPUs: 4x NVIDIA L4 (96 GB total VRAM)\n- Storage: 940 GiB NVMe SSD\n- Network: 40 Gbps bandwidth\n\n**Best for**: If you need to serve multiple models simultaneously or require higher throughput. Cost per GPU is better with 4x L4s ($1.15/hr per GPU) vs. 1x L40S ($3.00/hr per GPU).\n\n---\n\n## Why Not Other Options?\n\n- **g6e.2xlarge** ($2.24/hr): Only 48 GB system memory - falls short of your 64 GB requirement\n- **p5.4xlarge** ($6.88/hr): Over budget and overkill for inference (designed for training)\n- **g4dn series**: Previous generation, not recommended if current gen is available\n\n---\n\n## Cost Breakdown (Annual)\n\n| Instance | On-Demand Hourly | Monthly (730 hrs) | Annual |\n|----------|------------------|-------------------|--------|\n| g6e.4xlarge | $3.00 | $2,190 | $26,280 |\n| g6.12xlarge | $4.60 | $3,358 | $40,296 |\n\n## Savings Options\n\nIf running 24/7, consider **1yr Savings Plans**:\n- **g6e.4xlarge** with 1yr All Upfront: $1.97/hr (34% savings)\n- **g6.12xlarge** with 1yr All Upfront: $2.80/hr (39% savings)\n\n---\n\n## Recommendation Summary\n\n**Go with g6e.4xlarge** if you strictly need to stay near $3/hr and have single-model inference. It's the closest match to your constraints\u2014just $0.00/hr over budget with excellent L40S GPU capabilities. If you can absorb the extra cost or have multi-model needs, g6.12xlarge offers better value at scale with 4 GPUs.\n"}], "grading": {"expectations": [{"text": "Consults indexes / multiple candidates", "passed": true, "evidence": "4 unique GPU instances mentioned"}, {"text": "Filters by both RAM and GPU constraints", "passed": true, "evidence": "64 GB and GPU referenced"}, {"text": "Filters by under-$3/hr on-demand band", "passed": true, "evidence": "Budget acknowledged"}, {"text": "Compares >= 2 finalist instance types", "passed": true, "evidence": "Instances: ['g6.12xlarge', 'g6e.2xlarge', 'g6e.4xlarge', 'p5']"}, {"text": "us-west-2 referenced", "passed": true, "evidence": "Region present"}, {"text": "Recommends current-gen (not g3/g2/p2)", "passed": true, "evidence": "No old-gen GPU families"}, {"text": "Produces a comparison table", "passed": true, "evidence": "20 pipe chars"}, {"text": "Reports actual specs and prices", "passed": true, "evidence": "0 dollar values"}, {"text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)", "passed": true, "evidence": "GPU type named"}], "summary": {"passed": 9, "failed": 0, "total": 9, "pass_rate": 1.0}}}, {"id": "eval-3-rds-engine-and-region-comparison-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# RDS Postgres Pricing Analysis: db.r6i.2xlarge (8 vCPU, 64 GB RAM)\n\n## Recommendation\nFor a 32 GB working set OLTP workload with 8 vCPUs, **db.r6i.2xlarge** is the right fit. It offers 64 GB RAM (2\u00d7 your working set) and 8 vCPU, current-generation Intel instance.\n\n## Regional Pricing Comparison\n\n| Region | Term | Hourly | Monthly (730 hrs) | 1-Year Total |\n|--------|------|--------|-------------------|--------------|\n| **us-east-1** | On-Demand | $1.00 | $730 | $8,760 |\n| | 1yr Savings Plan (No Upfront) | $0.5776 | $421.40 | $5,056.80 |\n| | 1yr Savings Plan (All Upfront) | $0.275 | $200.75 | $2,407.50 |\n| **eu-central-1** | On-Demand | $1.22 | $890.60 | $10,687.20 |\n| | 1yr Savings Plan (No Upfront) | $0.8072 | $589.26 | $7,071.12 |\n| | 1yr Savings Plan (All Upfront) | $0.3845 | $280.69 | $3,368.25 |\n\n**Regional premium:** eu-central-1 runs 22% more expensive on-demand ($8,927 delta annually).\n\n## RDS vs. Self-Managed EC2\n\nRunning **r6i.2xlarge Linux EC2** 24/7:\n- On-Demand: $0.504/hr \u2192 $368/month \u2192 $4,416/year\n- 1yr Savings Plan (All Upfront): $0.311/hr \u2192 $227/month \u2192 $2,722/year\n\n**RDS overhead:** RDS Postgres costs roughly **98\u2013120% more** than naked EC2 (us-east-1 on-demand: $1.00 vs $0.504 = 98% premium). That premium includes managed backups, automated failover, monitoring, patching, and Multi-AZ replication readiness. For most teams, the operational value justifies the cost.\n\n## Recommendation\n- **us-east-1** on 1yr All Upfront Savings Plan: **$2,407.50/year** (73% discount off on-demand).\n- **eu-central-1** similar discount applies; expect ~$3,368/year.\n- If budget is tight and you can absorb operational overhead (backups, monitoring, failover), self-managed EC2 cuts compute cost 50%, but factor in DBA time.\n"}], "grading": {"expectations": [{"text": "Picks db-class with at least 32 GB RAM", "passed": true, "evidence": "db-class .2xlarge"}, {"text": "Current-generation RDS (m7i/r7i/m6i/r6i)", "passed": true, "evidence": "Current gen"}, {"text": "Calls get-rds-region-pricing for both regions", "passed": true, "evidence": "Both regions"}, {"text": "Filters to PostgreSQL row", "passed": true, "evidence": "PG referenced"}, {"text": "Acknowledges RDS terminology accurately", "passed": false, "evidence": "May conflate SP/RI"}, {"text": "Reports 1yr commitment price", "passed": true, "evidence": "1yr present"}, {"text": "Compares to EC2 / managed-vs-DIY", "passed": true, "evidence": "EC2 comparison"}], "summary": {"passed": 6, "failed": 1, "total": 7, "pass_rate": 0.857}}}, {"id": "eval-3-rds-engine-and-region-comparison-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# RDS Postgres Pricing Analysis: us-east-1 vs eu-central-1\n\n## Instance Class Recommendation\n\nFor your 32 GB working set with 8 vCPU OLTP workload, **`db.m5.2xlarge`** is the ideal fit:\n- **8 vCPUs** | **32 GB memory** | General purpose (M5 family)\n- Current-generation instance with excellent price-to-performance\n\n---\n\n## Pricing Comparison\n\n### US-EAST-1\n| Pricing Model | Hourly | Monthly* | Annual |\n|---|---|---|---|\n| **On-Demand** | $0.712 | $521 | $6,251 |\n| 1yr Savings Plan (No Upfront) | $0.456 | $334 | $3,996 |\n| 1yr Savings Plan (All Upfront) | $0.217 | $159 | $1,899 |\n| 3yr Savings Plan (All Upfront) | $0.286 | $209 | $2,508 |\n\n### EU-CENTRAL-1\n| Pricing Model | Hourly | Monthly* | Annual |\n|---|---|---|---|\n| **On-Demand** | $0.848 | $621 | $7,425 |\n| 1yr Savings Plan (No Upfront) | $0.606 | $443 | $5,296 |\n| 1yr Savings Plan (All Upfront) | $0.288 | $211 | $2,521 |\n| 3yr Savings Plan (All Upfront) | $0.407 | $298 | $3,564 |\n\n**Hourly rates shown are database instance pricing only (excludes storage, backups, data transfer).*\n*Monthly = hourly rate \u00d7 730 hours (average)*\n\n### Regional Cost Difference\n- **On-Demand**: EU is ~19% more expensive\n- **1yr Savings (All Upfront)**: EU is ~33% more expensive\n- **Recommendation**: If truly indifferent on data residency, **us-east-1** offers significantly better economics\n\n---\n\n## EC2 vs RDS Comparison (For Context)\n\n### RDS (db.m5.2xlarge, PostgreSQL) \u2013 us-east-1\n- **On-Demand**: $0.712/hr ($6,251/yr)\n\n### EC2 (m5.2xlarge, Linux) \u2013 us-east-1\n- **On-Demand**: $0.384/hr ($3,365/yr)\n\n### RDS Premium Over EC2\n- **+$0.328/hr** or **+$2,886/year** (85% markup)\n- This covers: managed backups, automated failover, multi-AZ option, monitoring, patch management, high availability features\n\nFor a self-managed Postgres on EC2:\n- Add 10-15% overhead for DBAs/automation\n- Must handle backups, patching, replication, failover yourself\n- Risk of unplanned downtime\n\n**RDS makes financial sense** when DBA effort is valued at >$2-3K/year, or when you can't tolerate management overhead.\n\n---\n\n## Key Takeaways\n\n1. **Use db.m5.2xlarge** \u2013 perfectly sized for your needs\n2. **Choose us-east-1** unless data residency is a firm requirement (19-33% savings)\n3. **Lock in Savings Plans** \u2013 1yr all-upfront cuts costs in half vs on-demand\n4. **RDS justifies its premium** through operational simplicity (not raw compute cost)\n"}], "grading": {"expectations": [{"text": "Picks db-class with at least 32 GB RAM", "passed": true, "evidence": "db-class .2xlarge"}, {"text": "Current-generation RDS (m7i/r7i/m6i/r6i)", "passed": false, "evidence": "Older gen"}, {"text": "Calls get-rds-region-pricing for both regions", "passed": true, "evidence": "Both regions"}, {"text": "Filters to PostgreSQL row", "passed": true, "evidence": "PG referenced"}, {"text": "Acknowledges RDS terminology accurately", "passed": false, "evidence": "May conflate SP/RI"}, {"text": "Reports 1yr commitment price", "passed": true, "evidence": "1yr present"}, {"text": "Compares to EC2 / managed-vs-DIY", "passed": true, "evidence": "EC2 comparison"}], "summary": {"passed": 5, "failed": 2, "total": 7, "pass_rate": 0.714}}}, {"id": "eval-4-gcp-right-sizing-with-aws-comparison-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# GCP Right-Sizing with AWS Cross-Cloud Comparison\n\n## Recommendation: n2-standard-16 (GCP) vs m7i.4xlarge (AWS)\n\n**GCP (us-central1):** n2-standard-16 is the ideal match for 16 vCPU / 64 GB RAM requirements.\n**AWS (us-east-1):** m7i.4xlarge provides equivalent specs on current-gen Intel Sapphire Rapids.\n\n| Cloud | Instance Type | vCPU | Memory | On-Demand | 1yr CUD/SP | 3yr CUD/SP |\n|-------|---|---|---|---|---|---|\n| **GCP** | n2-standard-16 | 16 | 64 GB | $0.777/hr | N/A | N/A |\n| **AWS** | m7i.4xlarge | 16 | 64 GB | $0.806/hr | $0.369/hr | $0.350/hr |\n\n### GCP Pricing Detail (us-central1, Linux):\n- **On-Demand:** $0.7769/hr \u2192 $567/month\n- **1-Year CUD:** GCP applies Sustained Use Discounts automatically; CUD (1-year or 3-year commitment) typically delivers 25-37% savings on on-demand. Estimated 1yr CUD: ~$0.58/hr ($423/month)\n\n### AWS Pricing Detail (us-east-1, Linux):\n- **On-Demand:** $0.8064/hr \u2192 $588/month\n- **1-Year Savings Plan (No Upfront):** $0.3668/hr \u2192 $268/month (54% savings)\n- **3-Year Savings Plan (All Upfront):** $0.3502/hr \u2192 $256/month (57% savings)\n\n### Cross-Cloud Notes:\nGCP pricing includes automatic Sustained Use Discounts for high utilization; AWS requires explicit Savings Plan or Reserved Instance purchase. AWS Savings Plans offer steeper discounts (up to 57% for 3yr commitment) compared to GCP's CUD model, but GCP's SUD kicks in immediately without commitment. Both are general-purpose current-gen machines with comparable single-thread performance. n2 (Intel Xeon 3rd-gen) vs m7i (Sapphire Rapids) show minimal architectural differences for this workload.\n"}], "grading": {"expectations": [{"text": "Picks current-gen GCP machine with 16 vCPU + 64 GB", "passed": true, "evidence": "Current-gen GCP machine sized correctly"}, {"text": "Calls Vantage GCP pricing tool", "passed": true, "evidence": "GCP region pricing surfaced"}, {"text": "Reports OD + 1yr CUD or SUD for GCP", "passed": true, "evidence": "CUD / SUD acknowledged"}, {"text": "Picks comparable AWS instance", "passed": true, "evidence": "AWS .xlarge instance present"}, {"text": "Calls get-ec2-region-pricing in us-east-1", "passed": true, "evidence": "AWS region present"}, {"text": "Side-by-side comparison structure", "passed": true, "evidence": "Comparison structure"}, {"text": "Notes CUD vs SP/RI commitment caveat", "passed": true, "evidence": "Cross-cloud commitment caveat present"}, {"text": "Does not invent prices", "passed": true, "evidence": "Multiple specific prices"}], "summary": {"passed": 8, "failed": 0, "total": 8, "pass_rate": 1.0}}}, {"id": "eval-4-gcp-right-sizing-with-aws-comparison-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# GCP Compute Engine Right-Sizing with AWS Comparison\n\n## Recommended GCP Machine Type\n**n2-standard-16** (N2 Standard 16, current generation)\n\n### GCP Specifications\n- **vCPUs**: 16\n- **Memory**: 64 GB\n- **Region**: us-central1\n- **Family**: General Purpose (current generation)\n\n### GCP Pricing (Linux)\n- **On-Demand**: $0.7769/hour\n- **1-Year CUD (All Upfront equivalent)**: $0.2394/hour\n\n### Annual Cost Estimates (8,760 hours/year)\n- **On-Demand Annual**: $0.7769 \u00d7 8,760 = **$6,801.36**\n- **1-Year CUD Savings**: $6,801.36 \u00d7 (65% savings) \u2248 **$2,380.48/year** (CUD rate \u2248 $0.272/hour)\n\n---\n\n## AWS Equivalent: m5zn.3xlarge (us-east-1)\n\n### AWS Specifications\n- **vCPUs**: 12\n- **Memory**: 48 GB\n- **Processor**: Intel Xeon Platinum 8252, 4.5 GHz\n- **Region**: us-east-1\n- **Family**: General Purpose (current generation)\n\n**Note**: m5zn.3xlarge has 12 vCPUs and 48 GB RAM\u2014undersized compared to your 16 vCPU/64 GB requirement. Better match would be **c7g.4xlarge** (16 vCPU, 32 GB) or **r7g.2xlarge** (8 vCPU, 64 GB) depending on compute vs. memory priority.\n\n### AWS Pricing (Linux, m5zn.3xlarge)\n- **On-Demand**: $0.991/hour\n- **1-Year Savings Plan (All Upfront)**: $0.641/hour\n\n### Annual Cost Estimates (8,760 hours/year)\n- **On-Demand Annual**: $0.991 \u00d7 8,760 = **$8,678.76**\n- **1-Year Savings Plan Annual**: $0.641 \u00d7 8,760 = **$5,613.96**\n\n---\n\n## Summary\nGCP n2-standard-16 delivers exact spec match at lower cost. AWS equivalents require tradeoffs between vCPU and RAM. GCP CUD provides steeper discounts (65%) vs. AWS Savings Plans (~35%), making GCP significantly cheaper for this workload.\n"}], "grading": {"expectations": [{"text": "Picks current-gen GCP machine with 16 vCPU + 64 GB", "passed": true, "evidence": "Current-gen GCP machine sized correctly"}, {"text": "Calls Vantage GCP pricing tool", "passed": true, "evidence": "GCP region pricing surfaced"}, {"text": "Reports OD + 1yr CUD or SUD for GCP", "passed": true, "evidence": "CUD / SUD acknowledged"}, {"text": "Picks comparable AWS instance", "passed": true, "evidence": "AWS .xlarge instance present"}, {"text": "Calls get-ec2-region-pricing in us-east-1", "passed": true, "evidence": "AWS region present"}, {"text": "Side-by-side comparison structure", "passed": true, "evidence": "Comparison structure"}, {"text": "Notes CUD vs SP/RI commitment caveat", "passed": true, "evidence": "Cross-cloud commitment caveat present"}, {"text": "Does not invent prices", "passed": true, "evidence": "Multiple specific prices"}], "summary": {"passed": 8, "failed": 0, "total": 8, "pass_rate": 1.0}}}, {"id": "eval-5-azure-pricing-on-demand-vs-reserved-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# Azure Standard_D8s_v5 Pricing Analysis (eastus, 24/7 Operation)\n\n## Summary\nFor **10x Standard_D8s_v5 instances** running 24/7 in eastus:\n\n| Pricing Model | Hourly/VM | Monthly/VM | Monthly (10x) | 3-Year Total (10x) |\n|---|---|---|---|---|\n| **On-Demand** | $0.576/hr | $420.48 | $4,204.80 | $151,372.80 |\n| **3-Year Reserved** | $0.319/hr | $232.87 | $2,328.70 | $83,833.20 |\n| **Savings** | 44.4% | 44.6% | 44.6% | 44.6% |\n\n## Details\n\n**Standard_D8s_v5** specs: 8 vCPU, 32 GB RAM, Premium SSD, Intel Xeon (4th Gen).\n\n### On-Demand (Linux)\n- **Hourly**: $0.576/VM\n- **Monthly (730 hrs)**: $420.48/VM\n- **10 VMs monthly**: $4,204.80\n- **Flexibility**: Full; switch anytime.\n\n### 3-Year Reserved Instance (All Upfront)\n- **Hourly**: $0.319/VM\n- **Monthly (730 hrs)**: $232.87/VM\n- **10 VMs monthly**: $2,328.70\n- **Upfront cost**: $83,833.20 (10 VMs for 3 years)\n- **Savings vs. on-demand**: $67,539.60 over 3 years.\n\n## Recommendation\n\nFor **predictable 24/7 load**, purchase 3-year Reserved Instances with **all-upfront payment**. This locks in 44.6% savings ($5,876.10/month for 10 VMs). If commitment flexibility is required, 1-year reservations (~30% savings) are also available. Spot VMs not applicable for 24/7 workloads (eviction risk). Consider **Azure Hybrid Benefit** if you have on-premises Windows Server or SQL Server licenses for additional discounts.\n"}], "grading": {"expectations": [{"text": "Calls Vantage Azure pricing for D8s_v5 in eastus", "passed": true, "evidence": "Instance + region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "On-demand price surfaced"}, {"text": "Reports a 3-yr Reserved/SP price", "passed": true, "evidence": "3yr commitment shown"}, {"text": "Computes monthly cost (730h)", "passed": true, "evidence": "Monthly cost shown"}, {"text": "Scales for 10 instances", "passed": true, "evidence": "10x scale-out"}, {"text": "Does not dump non-Linux rows", "passed": true, "evidence": "Filtered to Linux"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}}}, {"id": "eval-5-azure-pricing-on-demand-vs-reserved-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# Standard_D8s_v5 Azure Pricing\u2014Data Unavailable\n\n**Finding:** Vantage MCP database lacks Standard_D8s_v5 pricing. The v5 generation is newer than indexed instances (D-series v2\u2013v4 only).\n\n**For 10 instances at 24/7:**\nUse Azure Pricing Calculator (https://azure.microsoft.com/pricing/calculator/):\n- Instance: Standard_D8s_v5\n- Region: East US\n- 8,760 hours annually\n- Quantity: 10\n\n**Budget estimate:** Reserved Instances save 60\u201370% vs. on-demand for 3-year commitments. Consult Azure directly for exact v5 pricing.\n"}], "grading": {"expectations": [{"text": "Calls Vantage Azure pricing for D8s_v5 in eastus", "passed": true, "evidence": "Instance + region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": false, "evidence": "No specific OD price (may have failed to find data)"}, {"text": "Reports a 3-yr Reserved/SP price", "passed": false, "evidence": "3yr commitment shown"}, {"text": "Computes monthly cost (730h)", "passed": false, "evidence": "Monthly cost shown"}, {"text": "Scales for 10 instances", "passed": true, "evidence": "10x scale-out"}, {"text": "Does not dump non-Linux rows", "passed": true, "evidence": "Filtered to Linux"}], "summary": {"passed": 3, "failed": 3, "total": 6, "pass_rate": 0.5}}}, {"id": "eval-6-operator-action-runbook-fallback-with_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "# Stop EC2 Dev Instances Runbook\n\n**Status:** No EC2-management MCP wired. This is a runbook you execute directly.\n\n## Quick Answer\nStop all `env=dev` instances in `us-east-1`:\n\n```bash\nINSTANCE_IDS=$(aws ec2 describe-instances \\\n  --region us-east-1 \\\n  --filters \"Name=tag:env,Values=dev\" \"Name=instance-state-name,Values=running\" \\\n  --query 'Reservations[].Instances[].InstanceId' --output text)\n\naws ec2 stop-instances --region us-east-1 --instance-ids $INSTANCE_IDS\n```\n\n## Monday Auto-Restart\n\nUse Systems Manager Maintenance Windows or EventBridge + Lambda (no direct \"auto-restart\" tag):\n\n**Option 1: Start instances via cron (simplest)**\n```bash\n# Run Monday 9:00 AM (adjust timezone)\n0 9 * * 1 aws ec2 start-instances --region us-east-1 --instance-ids i-xxx i-yyy\n```\n\n**Option 2: EventBridge + Lambda rule (event-driven)**\n- Create EventBridge rule: `cron(0 9 ? * MON *)`\n- Target: Lambda function that calls `start-instances` with the same tag filter\n- Lambda code: query instances with `env=dev`, extract IDs, call `start-instances`\n\n## Prerequisites\n- AWS CLI v2 configured with credentials\n- IAM permissions: `ec2:DescribeInstances`, `ec2:StopInstances`, `ec2:StartInstances`\n\n## Verification\n```bash\n# Confirm stopped\naws ec2 describe-instances --region us-east-1 \\\n  --filters \"Name=tag:env,Values=dev\" \\\n  --query 'Reservations[].Instances[].[InstanceId, State.Name]' --output table\n```\n"}], "grading": {"expectations": [{"text": "Does NOT claim to have stopped instances", "passed": true, "evidence": "No false-action claims"}, {"text": "Produces aws CLI snippet with tag filter", "passed": true, "evidence": "Filtered stop-instances command present"}, {"text": "Includes stop-instances command", "passed": true, "evidence": "stop-instances present"}, {"text": "Addresses Monday auto-restart", "passed": true, "evidence": "Schedule mentioned"}, {"text": "Notes that no EC2 management MCP is wired", "passed": true, "evidence": "MCP gap acknowledged"}, {"text": "Output is a clearly labeled runbook", "passed": true, "evidence": "Runbook output"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}}}, {"id": "eval-6-operator-action-runbook-fallback-without_skill", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "answer.md", "type": "text", "content": "I don't have direct AWS EC2 management capabilities via MCP. However, I can see you mentioned I have access to cloud pricing tools. Let me explain your options:\n\n**What I cannot do:**\n- I don't have an EC2 management MCP to directly stop instances via API calls\n- I cannot execute AWS CLI commands without your authorization and setup\n\n**What you should do:**\n1. **Use AWS CLI** (fastest): Run `aws ec2 stop-instances --instance-ids <ids> --region us-east-1` after identifying instances with `aws ec2 describe-instances --filters \"Name=tag:env,Values=dev\" --region us-east-1`\n2. **Use AWS Console**: Tag-based filtering in EC2 dashboard \u2192 select instances \u2192 Instance State \u2192 Stop\n3. **Use Infrastructure-as-Code**: Add StopSchedules via EventBridge rules to auto-stop on Friday/restart Monday\n\n**To help via AWS CLI:**\nI can guide you through the commands if you'd like me to use computer-control to help execute them in your terminal.\n\nWould you like me to proceed with that approach?\n\n---\n\n*[Agent did not save a file to disk; this is the chat-only response captured for eval comparison.]*\n"}], "grading": {"expectations": [{"text": "Does NOT claim to have stopped instances", "passed": true, "evidence": "No false-action claims"}, {"text": "Produces aws CLI snippet with tag filter", "passed": true, "evidence": "Filtered stop-instances command present"}, {"text": "Includes stop-instances command", "passed": true, "evidence": "stop-instances present"}, {"text": "Addresses Monday auto-restart", "passed": true, "evidence": "Schedule mentioned"}, {"text": "Notes that no EC2 management MCP is wired", "passed": true, "evidence": "MCP gap acknowledged"}, {"text": "Output is a clearly labeled runbook", "passed": true, "evidence": "Runbook output"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}}}], "previous_feedback": {}, "previous_outputs": {"eval-1-ec2-cost-lookup-spot-vs-ondemand-with_skill": [{"name": "answer.md", "type": "text", "content": "# Spot vs On-Demand for m5.2xlarge Batch ETL in us-east-2\n\n## Cost Comparison\n\nFor an `m5.2xlarge` running 8 hours/day in us-east-2 with Linux:\n\n| Pricing Model | Hourly | Daily (8h) | Monthly* |\n| --- | --- | --- | --- |\n| **On-Demand** | $0.384/hr | $3.072 | ~$67.58 |\n| **Spot Avg** | $0.0869/hr | $0.695 | ~$15.29 |\n| **Savings** | 77% cheaper | $2.38/day | ~$52.29/month |\n\n*Monthly estimate assumes 22 working days\n\n## Should You Use Spot? Yes, With Caveats.\n\n**Your setup is well-suited for Spot:**\n\n1. **Workload characteristics** \u2014 Batch ETL that restarts cleanly from scratch is exactly what Spot is designed for. Your 20-minute recovery window is plenty of buffer.\n2. **Cost savings** \u2014 ~77% discount is substantial ($625/year saved on this one instance if running 250 working days).\n3. **Fault tolerance** \u2014 You don't checkpoint between rows, meaning there's no partial state to lose. A fresh restart is clean.\n\n**The catch: >20% interrupt frequency**\n\nVantage flags the `m5.2xlarge` in us-east-2 as having **>20% Spot interrupt frequency**. This means AWS reclaims it on average every 4\u20135 days (depending on daily usage patterns). With an 8-hour window per day, you'll see interruptions roughly 1\u20132 times per week.\n\nGiven your 20-minute restart time, that's acceptable:\n- Each interruption costs you one ~20-minute restart + lost compute for that day's run.\n- Over a month, that's maybe 4\u20138 hours of wasted compute.\n- Even accounting for restarts, you save ~$50/month.\n\n## Recommendation\n\n**Use Spot with these safeguards:**\n\n1. **Implement restart logic** \u2014 Ensure your ETL wrapper catches Spot interruption signals (EC2 2-minute warning via metadata service) and shuts down gracefully.\n2. **Monitor interruption patterns** \u2014 Track how often you're hit in practice. If it's >5x/week, the retry overhead might exceed savings.\n3. **Consider a fallback** \u2014 If a critical month arrives and Spot is unstable, switch to on-demand for that window (costs you ~$68 vs. $15 if unstable).\n4. **Set spending alerts** \u2014 Even at Spot rates, budget for occasional on-demand fallback.\n\n## Alternative: Savings Plans\n\nIf you want predictability without Spot risk, a **1-year Savings Plan (no upfront)** costs **$0.265/hr** (~$18.62/day, ~$410/month). That's 30% off on-demand and gets you stability, though you lose the massive Spot discount.\n\n---\n\n**Bottom line:** Spot saves you ~$625/year and fits your restartable job perfectly. The >20% interrupt rate is manageable at your 20-minute restart cost. Go for it, but add interrupt handling and monitor the first month.\n"}], "eval-1-ec2-cost-lookup-spot-vs-ondemand-without_skill": [{"name": "answer.md", "type": "text", "content": "# Spot vs On-Demand Analysis: m5.2xlarge in us-east-2\n\n## Current Costs (On-Demand Linux)\n- **On-Demand rate:** $0.384/hr\n- **Daily cost (8 hours):** $3.07\n- **Monthly cost (22 business days):** ~$67.65\n- **Annual cost:** ~$811.80\n\n## Spot Instance Pricing\n- **Spot average rate:** $0.0869/hr (77% cheaper)\n- **Daily cost (8 hours):** $0.69\n- **Monthly cost (22 business days):** ~$15.24\n- **Annual cost:** ~$182.88\n\n## Savings Potential\n- **Daily savings:** $2.38 (77% reduction)\n- **Annual savings:** ~$629/year\n- **Breakeven on a single 20-minute restart:** After just ~9 interruptions/month\n\n## Should You Use Spot? YES, with caveats.\n\n**Strong fits:**\n1. **Your 20-minute restart window is the key win** \u2014 at average Spot prices, you'd need ~20 interruptions per month to break even on restart costs. For m5 instances in us-east-2, interruption rates are typically <20%, meaning you're likely to have fewer than 3 per month.\n2. **Stateless design** \u2014 since the entire job is restartable from scratch, you have minimal risk exposure.\n3. **Batch workload** \u2014 no SLAs or real-time requirements mean brief interruptions won't cascade into failures.\n4. **Massive cost leverage** \u2014 77% savings makes even occasional restarts worth it.\n\n**Watch-outs:**\n- **Spot price volatility** \u2014 max price in us-east-2 is $0.0945/hr; avg should be stable, but check your CloudWatch metrics after a few weeks.\n- **High interruption frequency** \u2014 if you're consistently seeing >20% interruption rate (visible in your Spot Request history), that's the signal to reconsider.\n- **Peak hours** \u2014 Spot prices spike during regional demand spikes; batch your ETL off-peak if flexibility allows.\n\n## Recommended Approach\n**Use Spot as your default**, but:\n1. Set up CloudWatch alerts if Spot price approaches $0.12/hr (your break-even comfort zone)\n2. Keep a 1\u20132 on-demand instance on standby for time-sensitive runs\n3. Monitor interruption frequency for the first month \u2014 if it exceeds 25%, consider mixing strategies (Spot + Reserved Instances)\n\nYour 20-minute restart penalty is small enough that Spot is almost certainly the right call here.\n"}], "eval-2-ec2-right-sizing-with-constraints-with_skill": [{"name": "answer.md", "type": "text", "content": "# EC2 Instance Selection for Memory-Heavy ML Inference Service\n\n## Recommendation\n\nFor your ML inference service with 64+ GB RAM, at least 1 GPU, current generation, us-west-2 region, and under $3/hr budget, **g5.4xlarge is the best choice**.\n\n## Recommended Instance: g5.4xlarge\n\n**Specifications:**\n- **vCPU:** 16\n- **Memory:** 64 GiB\n- **GPU:** 1x NVIDIA A10G (24 GB VRAM)\n- **Generation:** Current (G5 family)\n- **Region:** us-west-2\n\n**On-Demand Pricing (Linux):**\n- **Hourly:** $1.624/hr\n- **Monthly (730 hrs):** $1,185/month\n- **Annual:** $14,220/year\n\n**Savings Plans (if committing):**\n- 1yr No Upfront: $1.125/hr (~31% savings)\n- 3yr All Upfront: $0.672/hr (~59% savings)\n\n## Comparison with Alternatives\n\n| Metric | g5.4xlarge | g6e.2xlarge | g6e.4xlarge |\n|--------|-----------|-------------|------------|\n| **vCPU** | 16 | 8 | 16 |\n| **Memory** | 64 GB | 64 GB | 128 GB |\n| **GPU** | 1x A10G (24 GB) | 1x L40S (48 GB) | 1x L40S (48 GB) |\n| **On-Demand (us-west-2)** | **$1.624/hr** | $2.242/hr | $3.004/hr |\n| **Generation** | Current (G5) | Current (G6e) | Current (G6e) |\n| **Meets Budget (<$3/hr)** | \u2713 Yes | \u2713 Yes | \u2717 Over (marginally) |\n\n## Why g5.4xlarge Wins\n\n1. **Best price for the specs:** At $1.624/hr, it's 38% cheaper than g6e.2xlarge and well under the $3/hr budget\n2. **Exactly matches your RAM requirement:** 64 GB memory meets the minimum threshold perfectly\n3. **Sufficient GPU for inference:** NVIDIA A10G with 24 GB VRAM is well-suited for inference workloads (vs. training)\n4. **Current generation:** G5 is AWS's current-gen GPU family for general ML/graphics\n5. **Strong CPU-to-GPU balance:** 16 vCPU provides ample headroom for preprocessing/batching\n\n## Alternative Options\n\n**g6e.2xlarge ($2.242/hr)** is worth considering if:\n- You need higher GPU memory (48 GB on L40S vs. 24 GB on A10G)\n- Your inference models require tensor operations (L40S excels at this)\n- You prefer fewer vCPU but don't mind paying 38% more\n\n**g6e.4xlarge ($3.004/hr)** exceeds your budget by ~0.3% on-demand, though it gives:\n- Double the memory (128 GB) for larger batch inference\n- Same GPU as g6e.2xlarge but with 16 vCPU instead of 8\n\n## Cost Projections\n\nUsing **g5.4xlarge** for 24/7 on-demand in us-west-2:\n- **Monthly:** $1,185\n- **Quarterly:** $3,555\n- **Annual:** $14,220\n\nIf you can commit to 1 year (no upfront Savings Plan at $1.125/hr):\n- **Annual savings:** ~$4,395 (31% off on-demand)\n- **New annual cost:** $9,825\n\n## Implementation Notes\n\n1. **Region confirmation:** Pricing verified for us-west-2 on 2026-05-08\n2. **Linux OS assumed:** Pricing shown is for Linux; Windows costs ~45% more\n3. **Networking:** g5.4xlarge includes enhanced networking and up to 25 Gbps bandwidth\n4. **Storage:** 600 GiB SSD included; EBS-optimized with up to 4,750 Mbps bandwidth\n5. **Spot option:** g5.4xlarge Spot Min is $0.49/hr in us-west-2 (~70% discount) but carries >20% interrupt frequency risk; suitable only for fault-tolerant workloads\n\n## Summary\n\n**Launch g5.4xlarge** in us-west-2. It delivers your exact requirements at 54% below budget and is the most cost-efficient current-generation GPU instance matching your constraints.\n"}], "eval-2-ec2-right-sizing-with-constraints-without_skill": [{"name": "answer.md", "type": "text", "content": "# EC2 Instance Selection for Memory-Heavy ML Inference\n\n## Recommendation: g6e.4xlarge\n\nYour best option is the **g6e.4xlarge** instance running on Linux in us-west-2.\n\n**Why this works:**\n- **RAM**: 128 GiB system memory (exceeds 64 GB requirement)\n- **GPU**: 1x NVIDIA L40S GPU with 48 GB VRAM (meets GPU requirement)\n- **Current generation**: Yes (G6e family)\n- **Cost**: $3.00/hr on-demand (just above your $3/hr budget but closest fit)\n\n### Key Specifications (g6e.4xlarge)\n- vCPUs: 16\n- System Memory: 128 GiB\n- GPU VRAM: 48 GiB (L40S)\n- Storage: 600 GiB NVMe SSD\n- Network: 20 Gbps bandwidth\n- EBS Optimization: Yes (1000 MB/s throughput)\n\n---\n\n## Alternative Option: g6.12xlarge\n\nIf you can increase your budget, the **g6.12xlarge** is excellent for scale:\n\n**Cost**: $4.60/hr on-demand (33% more expensive)\n\n**Specifications:**\n- vCPUs: 48\n- System Memory: 192 GiB\n- GPUs: 4x NVIDIA L4 (96 GB total VRAM)\n- Storage: 940 GiB NVMe SSD\n- Network: 40 Gbps bandwidth\n\n**Best for**: If you need to serve multiple models simultaneously or require higher throughput. Cost per GPU is better with 4x L4s ($1.15/hr per GPU) vs. 1x L40S ($3.00/hr per GPU).\n\n---\n\n## Why Not Other Options?\n\n- **g6e.2xlarge** ($2.24/hr): Only 48 GB system memory - falls short of your 64 GB requirement\n- **p5.4xlarge** ($6.88/hr): Over budget and overkill for inference (designed for training)\n- **g4dn series**: Previous generation, not recommended if current gen is available\n\n---\n\n## Cost Breakdown (Annual)\n\n| Instance | On-Demand Hourly | Monthly (730 hrs) | Annual |\n|----------|------------------|-------------------|--------|\n| g6e.4xlarge | $3.00 | $2,190 | $26,280 |\n| g6.12xlarge | $4.60 | $3,358 | $40,296 |\n\n## Savings Options\n\nIf running 24/7, consider **1yr Savings Plans**:\n- **g6e.4xlarge** with 1yr All Upfront: $1.97/hr (34% savings)\n- **g6.12xlarge** with 1yr All Upfront: $2.80/hr (39% savings)\n\n---\n\n## Recommendation Summary\n\n**Go with g6e.4xlarge** if you strictly need to stay near $3/hr and have single-model inference. It's the closest match to your constraints\u2014just $0.00/hr over budget with excellent L40S GPU capabilities. If you can absorb the extra cost or have multi-model needs, g6.12xlarge offers better value at scale with 4 GPUs.\n"}], "eval-3-rds-engine-and-region-comparison-with_skill": [{"name": "answer.md", "type": "text", "content": "# RDS PostgreSQL Pricing Analysis: US-East-1 vs EU-Central-1\n\n## Recommended Instance Class: `db.m7i.2xlarge`\n\nFor your 32 GB working set, OLTP workload with 8 vCPUs, the **`db.m7i.2xlarge`** is the perfect fit. It's a current-generation, general-purpose instance with exactly 8 vCPUs and 32 GB of memory. This is a modern Intel-based instance with strong networking and storage performance.\n\n---\n\n## Pricing Comparison\n\n### PostgreSQL on RDS db.m7i.2xlarge\n\n| Region | On-Demand | 1yr Savings Plan (No Upfront) | 1yr Savings Plan (All Upfront) | 3yr Savings Plan (All Upfront) |\n| --- | --- | --- | --- | --- |\n| **us-east-1** | $0.712/hr | $0.5696/hr | N/A | N/A |\n| **eu-central-1** | $0.848/hr | $0.6784/hr | N/A | N/A |\n\n#### Monthly and Annual Estimates (RDS)\n\n| Region | On-Demand/Month | On-Demand/Year | 1yr SP (No Up)/Month | 1yr SP (No Up)/Year |\n| --- | --- | --- | --- | --- |\n| **us-east-1** | $519 | $6,227 | $416 | $4,987 |\n| **eu-central-1** | $619 | $7,430 | $495 | $5,940 |\n\n**EU-Central-1 costs 19% more on-demand, and 19% more on Savings Plans.**\n\n---\n\n## EC2 Self-Managed Comparison\n\nIf you ran PostgreSQL yourself on an equivalent **m7i.2xlarge** EC2 instance (Linux):\n\n| Region | On-Demand | 1yr Savings Plan (No Upfront) | 3yr Savings Plan (All Upfront) |\n| --- | --- | --- | --- |\n| **us-east-1** | $0.4032/hr | $0.26672/hr | $0.15918/hr |\n| **eu-central-1** | $0.483/hr | $0.35145/hr | $0.20976/hr |\n\n#### Monthly EC2 Estimates\n\n| Region | On-Demand/Month | 1yr SP (No Up)/Month | 3yr SP (All Up)/Month |\n| --- | --- | --- | --- |\n| **us-east-1** | $294 | $195 | $116 |\n| **eu-central-1** | $353 | $257 | $153 |\n\n---\n\n## RDS vs EC2 Cost Delta\n\n| Region | On-Demand Delta | 1yr SP Delta | Annual RDS Cost | Annual EC2 Cost | % Premium |\n| --- | --- | --- | --- | --- | --- |\n| **us-east-1** | $0.309/hr | $0.303/hr | $6,227 | $2,140 | **191%** |\n| **eu-central-1** | $0.365/hr | $0.327/hr | $7,430 | $3,049 | **144%** |\n\n**RDS is roughly 1.4\u00d7 to 2.9\u00d7 more expensive than self-managed EC2**, depending on term. This delta covers managed backups, automated failover, Multi-AZ capability, patch management, and AWS monitoring.\n\n---\n\n## Recommendation\n\n### For Commitment Strategy\n- **RDS On-Demand ($519/month us-east-1)**: Best for testing/dev before locking into long-term.\n- **RDS 1yr Savings Plan (No Upfront, $416/month us-east-1)**: Good balance\u201442% savings vs on-demand, flexible month-to-month if needed.\n- Note: RDS does not offer all-upfront Savings Plans for `db.m7i` in all regions; reserved instances may be available for deeper discounts if multi-year commitment is possible.\n\n### For Region Choice\n**US-East-1 is 19% cheaper across all pricing tiers.** Use EU-Central-1 only if data residency requirements mandate it or if latency to US-East-1 is unacceptable.\n\n### EC2 vs RDS\n- **Use RDS** if your team lacks DBA expertise, you want AWS-managed HA/failover, or you value operational simplicity.\n- **Use EC2 self-managed** if you have strong DBA/DevOps capacity and want to minimize costs. Budget ~20\u201330 hours/month for patching, backups, monitoring, and failover orchestration.\n\n---\n\n## Summary Table (24/7 Annual Cost)\n\n| Option | Annual Cost | Savings vs RDS On-Demand |\n| --- | --- | --- |\n| RDS us-east-1 On-Demand | $6,227 | \u2014 |\n| RDS us-east-1 1yr SP (No Up) | $4,987 | $1,240 (-20%) |\n| RDS eu-central-1 On-Demand | $7,430 | -$1,203 (+19%) |\n| EC2 us-east-1 On-Demand | $2,140 | $4,087 (-66%) |\n| EC2 us-east-1 1yr SP | $1,425 | $4,802 (-77%) |\n| EC2 us-east-1 3yr SP All Up | $874 | $5,353 (-86%) |\n\n"}], "eval-3-rds-engine-and-region-comparison-without_skill": [{"name": "answer.md", "type": "text", "content": "# RDS Postgres Pricing Analysis: us-east-1 vs eu-central-1\n\n## Instance Class Recommendation\n\nFor your 32 GB working set with 8 vCPU OLTP workload, **`db.m5.2xlarge`** is the ideal fit:\n- **8 vCPUs** | **32 GB memory** | General purpose (M5 family)\n- Current-generation instance with excellent price-to-performance\n\n---\n\n## Pricing Comparison\n\n### US-EAST-1\n| Pricing Model | Hourly | Monthly* | Annual |\n|---|---|---|---|\n| **On-Demand** | $0.712 | $521 | $6,251 |\n| 1yr Savings Plan (No Upfront) | $0.456 | $334 | $3,996 |\n| 1yr Savings Plan (All Upfront) | $0.217 | $159 | $1,899 |\n| 3yr Savings Plan (All Upfront) | $0.286 | $209 | $2,508 |\n\n### EU-CENTRAL-1\n| Pricing Model | Hourly | Monthly* | Annual |\n|---|---|---|---|\n| **On-Demand** | $0.848 | $621 | $7,425 |\n| 1yr Savings Plan (No Upfront) | $0.606 | $443 | $5,296 |\n| 1yr Savings Plan (All Upfront) | $0.288 | $211 | $2,521 |\n| 3yr Savings Plan (All Upfront) | $0.407 | $298 | $3,564 |\n\n**Hourly rates shown are database instance pricing only (excludes storage, backups, data transfer).*\n*Monthly = hourly rate \u00d7 730 hours (average)*\n\n### Regional Cost Difference\n- **On-Demand**: EU is ~19% more expensive\n- **1yr Savings (All Upfront)**: EU is ~33% more expensive\n- **Recommendation**: If truly indifferent on data residency, **us-east-1** offers significantly better economics\n\n---\n\n## EC2 vs RDS Comparison (For Context)\n\n### RDS (db.m5.2xlarge, PostgreSQL) \u2013 us-east-1\n- **On-Demand**: $0.712/hr ($6,251/yr)\n\n### EC2 (m5.2xlarge, Linux) \u2013 us-east-1\n- **On-Demand**: $0.384/hr ($3,365/yr)\n\n### RDS Premium Over EC2\n- **+$0.328/hr** or **+$2,886/year** (85% markup)\n- This covers: managed backups, automated failover, multi-AZ option, monitoring, patch management, high availability features\n\nFor a self-managed Postgres on EC2:\n- Add 10-15% overhead for DBAs/automation\n- Must handle backups, patching, replication, failover yourself\n- Risk of unplanned downtime\n\n**RDS makes financial sense** when DBA effort is valued at >$2-3K/year, or when you can't tolerate management overhead.\n\n---\n\n## Key Takeaways\n\n1. **Use db.m5.2xlarge** \u2013 perfectly sized for your needs\n2. **Choose us-east-1** unless data residency is a firm requirement (19-33% savings)\n3. **Lock in Savings Plans** \u2013 1yr all-upfront cuts costs in half vs on-demand\n4. **RDS justifies its premium** through operational simplicity (not raw compute cost)\n"}]}, "benchmark": {"metadata": {"skill_name": "cloud-operator", "skill_path": "/Users/mateen/Library/Application Support/Claude/local-agent-mode-sessions/9c684615-37f6-4c75-9747-4e379872097e/7fcb64cc-41ec-41a5-b935-9c940ac7c777/local_d798b4a3-4b11-4cc3-a054-37477cc40d7e/outputs/cloud-operator", "executor_model": "claude-opus-4-7", "timestamp": "2026-05-09T00:00:00Z", "evals_run": [1, 2, 3, 4, 5, 6], "runs_per_configuration": 1}, "runs": [{"eval_id": 1, "eval_name": "ec2-cost-lookup-spot-vs-ondemand", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 58.0, "tokens": 81816, "tool_calls": 9, "errors": 0}, "expectations": [{"text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2", "passed": true, "evidence": "Both instance and region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "$0.384/hr on-demand range found"}, {"text": "Reports a specific Spot price", "passed": true, "evidence": "Spot $0.0xx/hr present"}, {"text": "Surfaces the Spot interrupt frequency rating from Vantage", "passed": true, "evidence": ">20% interrupt frequency surfaced"}, {"text": "Recommends Spot for restartable batch", "passed": true, "evidence": "Pro-Spot recommendation"}, {"text": "Does not dump full Windows / SQL / Dedicated rows", "passed": true, "evidence": "Filtered output"}], "notes": []}, {"eval_id": 1, "eval_name": "ec2-cost-lookup-spot-vs-ondemand", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 117.9, "tokens": 74301, "tool_calls": 5, "errors": 0}, "expectations": [{"text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2", "passed": true, "evidence": "Both instance and region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "$0.384/hr on-demand range found"}, {"text": "Reports a specific Spot price", "passed": true, "evidence": "Spot $0.0xx/hr present"}, {"text": "Surfaces the Spot interrupt frequency rating from Vantage", "passed": true, "evidence": ">20% interrupt frequency surfaced"}, {"text": "Recommends Spot for restartable batch", "passed": true, "evidence": "Pro-Spot recommendation"}, {"text": "Does not dump full Windows / SQL / Dedicated rows", "passed": true, "evidence": "Filtered output"}], "notes": []}, {"eval_id": 2, "eval_name": "ec2-right-sizing-with-constraints", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 9, "failed": 0, "total": 9, "time_seconds": 75.6, "tokens": 116444, "tool_calls": 16, "errors": 0}, "expectations": [{"text": "Consults indexes / multiple candidates", "passed": true, "evidence": "2 unique GPU instances mentioned"}, {"text": "Filters by both RAM and GPU constraints", "passed": true, "evidence": "64 GB and GPU referenced"}, {"text": "Filters by under-$3/hr on-demand band", "passed": true, "evidence": "Budget acknowledged"}, {"text": "Compares >= 2 finalist instance types", "passed": true, "evidence": "Instances: ['g5.4xlarge', 'g6e.2xlarge']"}, {"text": "us-west-2 referenced", "passed": true, "evidence": "Region present"}, {"text": "Recommends current-gen (not g3/g2/p2)", "passed": true, "evidence": "No old-gen GPU families"}, {"text": "Produces a comparison table", "passed": true, "evidence": "35 pipe chars"}, {"text": "Reports actual specs and prices", "passed": true, "evidence": "0 dollar values"}, {"text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)", "passed": true, "evidence": "GPU type named"}], "notes": []}, {"eval_id": 2, "eval_name": "ec2-right-sizing-with-constraints", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 9, "failed": 0, "total": 9, "time_seconds": 136.0, "tokens": 84411, "tool_calls": 15, "errors": 0}, "expectations": [{"text": "Consults indexes / multiple candidates", "passed": true, "evidence": "4 unique GPU instances mentioned"}, {"text": "Filters by both RAM and GPU constraints", "passed": true, "evidence": "64 GB and GPU referenced"}, {"text": "Filters by under-$3/hr on-demand band", "passed": true, "evidence": "Budget acknowledged"}, {"text": "Compares >= 2 finalist instance types", "passed": true, "evidence": "Instances: ['g6.12xlarge', 'g6e.2xlarge', 'g6e.4xlarge', 'p5']"}, {"text": "us-west-2 referenced", "passed": true, "evidence": "Region present"}, {"text": "Recommends current-gen (not g3/g2/p2)", "passed": true, "evidence": "No old-gen GPU families"}, {"text": "Produces a comparison table", "passed": true, "evidence": "20 pipe chars"}, {"text": "Reports actual specs and prices", "passed": true, "evidence": "0 dollar values"}, {"text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)", "passed": true, "evidence": "GPU type named"}], "notes": []}, {"eval_id": 3, "eval_name": "rds-engine-and-region-comparison", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 0.857, "passed": 6, "failed": 1, "total": 7, "time_seconds": 79.3, "tokens": 94551, "tool_calls": 18, "errors": 0}, "expectations": [{"text": "Picks db-class with at least 32 GB RAM", "passed": true, "evidence": "db-class .2xlarge"}, {"text": "Current-generation RDS (m7i/r7i/m6i/r6i)", "passed": true, "evidence": "Current gen"}, {"text": "Calls get-rds-region-pricing for both regions", "passed": true, "evidence": "Both regions"}, {"text": "Filters to PostgreSQL row", "passed": true, "evidence": "PG referenced"}, {"text": "Acknowledges RDS terminology accurately", "passed": false, "evidence": "May conflate SP/RI"}, {"text": "Reports 1yr commitment price", "passed": true, "evidence": "1yr present"}, {"text": "Compares to EC2 / managed-vs-DIY", "passed": true, "evidence": "EC2 comparison"}], "notes": []}, {"eval_id": 3, "eval_name": "rds-engine-and-region-comparison", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.714, "passed": 5, "failed": 2, "total": 7, "time_seconds": 186.9, "tokens": 87281, "tool_calls": 11, "errors": 0}, "expectations": [{"text": "Picks db-class with at least 32 GB RAM", "passed": true, "evidence": "db-class .2xlarge"}, {"text": "Current-generation RDS (m7i/r7i/m6i/r6i)", "passed": false, "evidence": "Older gen"}, {"text": "Calls get-rds-region-pricing for both regions", "passed": true, "evidence": "Both regions"}, {"text": "Filters to PostgreSQL row", "passed": true, "evidence": "PG referenced"}, {"text": "Acknowledges RDS terminology accurately", "passed": false, "evidence": "May conflate SP/RI"}, {"text": "Reports 1yr commitment price", "passed": true, "evidence": "1yr present"}, {"text": "Compares to EC2 / managed-vs-DIY", "passed": true, "evidence": "EC2 comparison"}], "notes": []}, {"eval_id": 4, "eval_name": "gcp-right-sizing-with-aws-comparison", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 8, "failed": 0, "total": 8, "time_seconds": 90.0, "tokens": 119632, "tool_calls": 26, "errors": 0}, "expectations": [{"text": "Picks current-gen GCP machine with 16 vCPU + 64 GB", "passed": true, "evidence": "Current-gen GCP machine sized correctly"}, {"text": "Calls Vantage GCP pricing tool", "passed": true, "evidence": "GCP region pricing surfaced"}, {"text": "Reports OD + 1yr CUD or SUD for GCP", "passed": true, "evidence": "CUD / SUD acknowledged"}, {"text": "Picks comparable AWS instance", "passed": true, "evidence": "AWS .xlarge instance present"}, {"text": "Calls get-ec2-region-pricing in us-east-1", "passed": true, "evidence": "AWS region present"}, {"text": "Side-by-side comparison structure", "passed": true, "evidence": "Comparison structure"}, {"text": "Notes CUD vs SP/RI commitment caveat", "passed": true, "evidence": "Cross-cloud commitment caveat present"}, {"text": "Does not invent prices", "passed": true, "evidence": "Multiple specific prices"}], "notes": []}, {"eval_id": 4, "eval_name": "gcp-right-sizing-with-aws-comparison", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 8, "failed": 0, "total": 8, "time_seconds": 70.0, "tokens": 88279, "tool_calls": 15, "errors": 0}, "expectations": [{"text": "Picks current-gen GCP machine with 16 vCPU + 64 GB", "passed": true, "evidence": "Current-gen GCP machine sized correctly"}, {"text": "Calls Vantage GCP pricing tool", "passed": true, "evidence": "GCP region pricing surfaced"}, {"text": "Reports OD + 1yr CUD or SUD for GCP", "passed": true, "evidence": "CUD / SUD acknowledged"}, {"text": "Picks comparable AWS instance", "passed": true, "evidence": "AWS .xlarge instance present"}, {"text": "Calls get-ec2-region-pricing in us-east-1", "passed": true, "evidence": "AWS region present"}, {"text": "Side-by-side comparison structure", "passed": true, "evidence": "Comparison structure"}, {"text": "Notes CUD vs SP/RI commitment caveat", "passed": true, "evidence": "Cross-cloud commitment caveat present"}, {"text": "Does not invent prices", "passed": true, "evidence": "Multiple specific prices"}], "notes": []}, {"eval_id": 5, "eval_name": "azure-pricing-on-demand-vs-reserved", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 70.0, "tokens": 83848, "tool_calls": 21, "errors": 0}, "expectations": [{"text": "Calls Vantage Azure pricing for D8s_v5 in eastus", "passed": true, "evidence": "Instance + region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": true, "evidence": "On-demand price surfaced"}, {"text": "Reports a 3-yr Reserved/SP price", "passed": true, "evidence": "3yr commitment shown"}, {"text": "Computes monthly cost (730h)", "passed": true, "evidence": "Monthly cost shown"}, {"text": "Scales for 10 instances", "passed": true, "evidence": "10x scale-out"}, {"text": "Does not dump non-Linux rows", "passed": true, "evidence": "Filtered to Linux"}], "notes": []}, {"eval_id": 5, "eval_name": "azure-pricing-on-demand-vs-reserved", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.5, "passed": 3, "failed": 3, "total": 6, "time_seconds": 133.8, "tokens": 72085, "tool_calls": 14, "errors": 0}, "expectations": [{"text": "Calls Vantage Azure pricing for D8s_v5 in eastus", "passed": true, "evidence": "Instance + region present"}, {"text": "Reports a specific on-demand Linux hourly price", "passed": false, "evidence": "No specific OD price (may have failed to find data)"}, {"text": "Reports a 3-yr Reserved/SP price", "passed": false, "evidence": "3yr commitment shown"}, {"text": "Computes monthly cost (730h)", "passed": false, "evidence": "Monthly cost shown"}, {"text": "Scales for 10 instances", "passed": true, "evidence": "10x scale-out"}, {"text": "Does not dump non-Linux rows", "passed": true, "evidence": "Filtered to Linux"}], "notes": []}, {"eval_id": 6, "eval_name": "operator-action-runbook-fallback", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 32.3, "tokens": 78590, "tool_calls": 9, "errors": 0}, "expectations": [{"text": "Does NOT claim to have stopped instances", "passed": true, "evidence": "No false-action claims"}, {"text": "Produces aws CLI snippet with tag filter", "passed": true, "evidence": "Filtered stop-instances command present"}, {"text": "Includes stop-instances command", "passed": true, "evidence": "stop-instances present"}, {"text": "Addresses Monday auto-restart", "passed": true, "evidence": "Schedule mentioned"}, {"text": "Notes that no EC2 management MCP is wired", "passed": true, "evidence": "MCP gap acknowledged"}, {"text": "Output is a clearly labeled runbook", "passed": true, "evidence": "Runbook output"}], "notes": []}, {"eval_id": 6, "eval_name": "operator-action-runbook-fallback", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 6.7, "tokens": 66323, "tool_calls": 1, "errors": 0}, "expectations": [{"text": "Does NOT claim to have stopped instances", "passed": true, "evidence": "No false-action claims"}, {"text": "Produces aws CLI snippet with tag filter", "passed": true, "evidence": "Filtered stop-instances command present"}, {"text": "Includes stop-instances command", "passed": true, "evidence": "stop-instances present"}, {"text": "Addresses Monday auto-restart", "passed": true, "evidence": "Schedule mentioned"}, {"text": "Notes that no EC2 management MCP is wired", "passed": true, "evidence": "MCP gap acknowledged"}, {"text": "Output is a clearly labeled runbook", "passed": true, "evidence": "Runbook output"}], "notes": []}], "run_summary": {"with_skill": {"pass_rate": {"mean": 0.976, "stddev": 0.053, "min": 0.857, "max": 1.0}, "time_seconds": {"mean": 67.533, "stddev": 18.469, "min": 32.3, "max": 90.0}, "tokens": {"mean": 95813.5, "stddev": 16483.752, "min": 78590, "max": 119632}}, "without_skill": {"pass_rate": {"mean": 0.869, "stddev": 0.195, "min": 0.5, "max": 1.0}, "time_seconds": {"mean": 108.55, "stddev": 56.975, "min": 6.7, "max": 186.9}, "tokens": {"mean": 78780.0, "stddev": 8309.307, "min": 66323, "max": 88279}}, "delta": {"pass_rate": "+0.107", "time_seconds": "-41.0", "tokens": "+17033"}}, "notes": ["Iteration 2 \u2014 multi-cloud expansion (cloud-operator). 6 evals run with-skill; 3 new evals (4,5,6) also run without-skill. Evals 1-3 reuse iteration-1 baseline for without_skill.", "Eval 5 without_skill \u2014 agent reported Vantage 'lacks D8s_v5 pricing' and refused to compute (incorrect; with-skill agent successfully retrieved $0.576/hr OD and $0.319/hr 3yr Reserved). Strong signal that the skill helped the agent know which tool to call.", "Eval 6 without_skill \u2014 agent neither stopped instances nor produced a clear runbook; punted with vague options. With-skill agent applied Pattern D and produced a labeled runbook with CLI + Monday auto-restart. Big skill win.", "Eval 4 \u2014 both with_skill and without_skill picked GCP and AWS instances; without-skill chose smaller AWS instance (m5zn.3xlarge with only 12 vCPU + 48 GB) which doesn't meet spec. With-skill matched specs exactly.", "Token cost: with-skill averaged ~96k tokens (more reading); without-skill averaged ~75k. Skill costs ~28% more tokens for substantially higher quality.", "Some agent runs in iteration-2 saved files to wrong paths and required consolidation; the skill itself didn't cause this \u2014 it's a Write tool path-handling quirk in subagents."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+site_name: Cloud Operator Skill
+site_description: Multi-cloud operator agent for AWS, GCP, and Azure — pricing, right-sizing, lifecycle, observability, IaC, AI/GPU.
+site_url: https://YOUR-USERNAME.github.io/cloud-operator-skill/
+repo_url: https://github.com/YOUR-USERNAME/cloud-operator-skill
+repo_name: cloud-operator-skill
+edit_uri: edit/main/docs/
+copyright: MIT licensed. © cloud-operator-skill contributors.
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      separator: '[\s\-\.]+'
+  - tags
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+
+  - Getting Started:
+      - getting-started/index.md
+      - Install the skill: getting-started/install.md
+      - First invocation: getting-started/first-invocation.md
+      - Cloud-operator concepts: getting-started/concepts.md
+      - Glossary: getting-started/glossary.md
+
+  - The Skill:
+      - skill/index.md
+      - SKILL.md (skill body): skill/SKILL.md
+      - Pricing Pillars & References:
+          - AWS pillars (EC2 / RDS / ElastiCache / OpenSearch / Redshift): skill/references/aws-pillars.md
+          - GCP pillars (Compute Engine / Cloud SQL / Spanner / BigQuery): skill/references/gcp-pillars.md
+          - Azure pillars (VMs / SQL DB / Cosmos / Synapse / AKS): skill/references/azure-pillars.md
+          - Pricing models (On-demand / Spot / Savings Plans / Reserved): skill/references/pricing-models.md
+          - MCP availability map: skill/references/mcp-availability.md
+          - Runbook templates (CLI / Terraform / Bicep): skill/references/runbook-templates.md
+      - Eval prompts & assertions: skill/evals.md
+
+  - Cloud Operator Toolset:
+      - reference/index.md
+      - Service catalog (~245 services): reference/service-catalog.md
+      - Operations catalog (API ops + MCP status): reference/operations-catalog.md
+      - Interactive mindmap (283 nodes): reference/mindmap.md
+
+  - Guides:
+      - guides/index.md
+      - Skill expansion roadmap: guides/expansion-plan.md
+      - Eval methodology: guides/eval-methodology.md
+      - Adding a new MCP: guides/adding-mcp.md
+
+  - Eval Results:
+      - evals/index.md
+      - Iteration 1: evals/iteration-1.md
+      - Iteration 2: evals/iteration-2.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/YOUR-USERNAME/cloud-operator-skill
+  generator: false

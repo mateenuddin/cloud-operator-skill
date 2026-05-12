@@ -1,0 +1,296 @@
+# Cloud Operator Mindmap
+
+A 283-node interactive mindmap of every cloud-operator-relevant service across AWS, GCP, and Azure, organized by capability area.
+
+```mermaid
+mindmap
+  root((Cloud Operator Tools))
+    AWS
+      Pricing and Billing
+        Pricing API
+        Cost Explorer
+        Cost and Usage Reports
+        Budgets
+        Cost Anomaly Detection
+        Compute Optimizer
+        Trusted Advisor
+        Savings Plans
+      Compute
+        EC2
+        Lambda
+        ECS
+        EKS
+        Fargate
+        Batch
+        Lightsail
+        App Runner
+      Storage
+        S3
+        EBS
+        EFS
+        FSx
+        Storage Gateway
+        Glacier
+        AWS Backup
+      Database
+        RDS
+        Aurora
+        DynamoDB
+        ElastiCache
+        Redshift
+        DocumentDB
+        Neptune
+        Timestream
+      Networking
+        VPC
+        Route 53
+        CloudFront
+        API Gateway
+        ELB
+        Direct Connect
+        Transit Gateway
+        Global Accelerator
+      Identity and Security
+        IAM
+        Organizations
+        KMS
+        Secrets Manager
+        GuardDuty
+        WAF
+        Shield
+        Security Hub
+        Inspector
+      Management and DevOps
+        CloudFormation
+        CDK
+        Systems Manager
+        Config
+        CloudTrail
+        Service Catalog
+        Control Tower
+        CodePipeline
+      Observability
+        CloudWatch
+        X-Ray
+        EventBridge
+        Managed Grafana
+        Managed Prometheus
+      Analytics
+        Athena
+        Glue
+        EMR
+        Kinesis
+        MSK
+        OpenSearch
+        QuickSight
+        Lake Formation
+      Machine Learning
+        SageMaker
+        Bedrock
+        Comprehend
+        Rekognition
+        Textract
+        Q
+      Integration
+        SNS
+        SQS
+        Step Functions
+        AppFlow
+        EventBridge Pipes
+    GCP
+      Pricing and Billing
+        Cloud Billing API
+        BigQuery Billing Export
+        Pricing Calculator
+        Budgets
+        Recommender
+        Active Assist
+        CUDs
+        Carbon Footprint
+      Compute
+        Compute Engine
+        Cloud Run
+        Cloud Functions
+        GKE Standard
+        GKE Autopilot
+        App Engine
+        Cloud Batch
+        Cloud Workstations
+      Storage
+        Cloud Storage
+        Persistent Disk
+        Hyperdisk
+        Filestore
+        Transfer Service
+        NetApp Volumes
+        Backup and DR
+      Database
+        Cloud SQL
+        AlloyDB
+        Spanner
+        Firestore
+        Bigtable
+        Memorystore
+        BigQuery
+        Datastream
+      Networking
+        VPC
+        Cloud Load Balancing
+        Cloud CDN
+        Cloud DNS
+        Cloud Interconnect
+        Cloud NAT
+        Cloud Armor
+        Service Directory
+      Identity and Security
+        Cloud IAM
+        Resource Manager
+        Cloud Identity
+        IAP
+        Cloud KMS
+        Secret Manager
+        Identity Platform
+        Security Command Center
+        Binary Authorization
+      Management and DevOps
+        Deployment Manager
+        Config Connector
+        Cloud Asset Inventory
+        Cloud Build
+        Cloud Deploy
+        Artifact Registry
+        Organization Policy
+        Cloud Shell
+      Observability
+        Cloud Monitoring
+        Cloud Logging
+        Cloud Trace
+        Cloud Profiler
+        Error Reporting
+        Personalized Service Health
+      Analytics
+        BigQuery
+        Dataflow
+        Dataproc
+        Pub Sub
+        Looker
+        Data Fusion
+        Dataplex
+        Analytics Hub
+      Machine Learning
+        Vertex AI
+        Gemini API
+        AutoML
+        Document AI
+        Speech APIs
+        Vision AI
+        Dialogflow
+      Integration
+        Pub Sub
+        Cloud Tasks
+        Workflows
+        Eventarc
+        Cloud Scheduler
+        Apigee
+    Azure
+      Pricing and Billing
+        Cost Management Billing
+        Pricing Calculator
+        Advisor
+        Reservations
+        Savings Plans
+        Hybrid Benefit
+        Carbon Optimization
+      Compute
+        Virtual Machines
+        VM Scale Sets
+        Functions
+        App Service
+        AKS
+        Container Instances
+        Container Apps
+        Batch
+      Storage
+        Blob Storage
+        Files
+        Disk Storage
+        NetApp Files
+        Data Lake Storage Gen2
+        Backup
+        Site Recovery
+      Database
+        SQL Database
+        Database for PostgreSQL
+        Database for MySQL
+        Cosmos DB
+        Cache for Redis
+        Synapse SQL Pool
+      Networking
+        Virtual Network
+        Load Balancer
+        Application Gateway
+        Front Door
+        CDN
+        ExpressRoute
+        VPN Gateway
+        Azure DNS
+        Azure Firewall
+        Private Link
+      Identity and Security
+        Microsoft Entra ID
+        Permissions Management
+        RBAC
+        Managed Identities
+        Key Vault
+        Defender for Cloud
+        Sentinel
+        Policy
+        Purview
+      Management and DevOps
+        Resource Manager
+        Bicep
+        Resource Graph
+        Lighthouse
+        Blueprints
+        Automation
+        Arc
+        Azure DevOps
+        GitHub Actions
+      Observability
+        Monitor
+        Log Analytics
+        Application Insights
+        Service Health
+        Managed Grafana
+        Managed Prometheus
+      Analytics
+        Synapse Analytics
+        Microsoft Fabric
+        Data Factory
+        Stream Analytics
+        Event Hubs
+        HDInsight
+        Databricks
+        Power BI
+      Machine Learning
+        AI Foundry
+        Azure OpenAI
+        Azure ML
+        AI Vision
+        AI Speech
+        Document Intelligence
+        AI Search
+      Integration
+        Service Bus
+        Event Grid
+        Logic Apps
+        API Management
+        Relay
+```
+
+## Other formats
+
+- [Standalone HTML viewer](../assets/cloud-operator-mindmap.html) — pannable / zoomable, no search constraints
+- [Raw `.mmd` source](../assets/cloud-operator-toolset.mmd) — paste into [mermaid.live](https://mermaid.live) to remix
+- [Service catalog (markdown)](service-catalog.md) — same data as a scrollable list with one-line explanations per service
+- [Operations catalog](operations-catalog.md) — drill from service to API operation

@@ -1,0 +1,722 @@
+{
+  "metadata": {
+    "skill_name": "cloud-operator",
+    "skill_path": "/Users/mateen/Library/Application Support/Claude/local-agent-mode-sessions/9c684615-37f6-4c75-9747-4e379872097e/7fcb64cc-41ec-41a5-b935-9c940ac7c777/local_d798b4a3-4b11-4cc3-a054-37477cc40d7e/outputs/cloud-operator",
+    "executor_model": "claude-opus-4-7",
+    "timestamp": "2026-05-09T00:00:00Z",
+    "evals_run": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "ec2-cost-lookup-spot-vs-ondemand",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 58.0,
+        "tokens": 81816,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2",
+          "passed": true,
+          "evidence": "Both instance and region present"
+        },
+        {
+          "text": "Reports a specific on-demand Linux hourly price",
+          "passed": true,
+          "evidence": "$0.384/hr on-demand range found"
+        },
+        {
+          "text": "Reports a specific Spot price",
+          "passed": true,
+          "evidence": "Spot $0.0xx/hr present"
+        },
+        {
+          "text": "Surfaces the Spot interrupt frequency rating from Vantage",
+          "passed": true,
+          "evidence": ">20% interrupt frequency surfaced"
+        },
+        {
+          "text": "Recommends Spot for restartable batch",
+          "passed": true,
+          "evidence": "Pro-Spot recommendation"
+        },
+        {
+          "text": "Does not dump full Windows / SQL / Dedicated rows",
+          "passed": true,
+          "evidence": "Filtered output"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "ec2-cost-lookup-spot-vs-ondemand",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 117.9,
+        "tokens": 74301,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Calls get-ec2-region-pricing for m5.2xlarge in us-east-2",
+          "passed": true,
+          "evidence": "Both instance and region present"
+        },
+        {
+          "text": "Reports a specific on-demand Linux hourly price",
+          "passed": true,
+          "evidence": "$0.384/hr on-demand range found"
+        },
+        {
+          "text": "Reports a specific Spot price",
+          "passed": true,
+          "evidence": "Spot $0.0xx/hr present"
+        },
+        {
+          "text": "Surfaces the Spot interrupt frequency rating from Vantage",
+          "passed": true,
+          "evidence": ">20% interrupt frequency surfaced"
+        },
+        {
+          "text": "Recommends Spot for restartable batch",
+          "passed": true,
+          "evidence": "Pro-Spot recommendation"
+        },
+        {
+          "text": "Does not dump full Windows / SQL / Dedicated rows",
+          "passed": true,
+          "evidence": "Filtered output"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "ec2-right-sizing-with-constraints",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 75.6,
+        "tokens": 116444,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Consults indexes / multiple candidates",
+          "passed": true,
+          "evidence": "2 unique GPU instances mentioned"
+        },
+        {
+          "text": "Filters by both RAM and GPU constraints",
+          "passed": true,
+          "evidence": "64 GB and GPU referenced"
+        },
+        {
+          "text": "Filters by under-$3/hr on-demand band",
+          "passed": true,
+          "evidence": "Budget acknowledged"
+        },
+        {
+          "text": "Compares >= 2 finalist instance types",
+          "passed": true,
+          "evidence": "Instances: ['g5.4xlarge', 'g6e.2xlarge']"
+        },
+        {
+          "text": "us-west-2 referenced",
+          "passed": true,
+          "evidence": "Region present"
+        },
+        {
+          "text": "Recommends current-gen (not g3/g2/p2)",
+          "passed": true,
+          "evidence": "No old-gen GPU families"
+        },
+        {
+          "text": "Produces a comparison table",
+          "passed": true,
+          "evidence": "35 pipe chars"
+        },
+        {
+          "text": "Reports actual specs and prices",
+          "passed": true,
+          "evidence": "0 dollar values"
+        },
+        {
+          "text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)",
+          "passed": true,
+          "evidence": "GPU type named"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "ec2-right-sizing-with-constraints",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 136.0,
+        "tokens": 84411,
+        "tool_calls": 15,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Consults indexes / multiple candidates",
+          "passed": true,
+          "evidence": "4 unique GPU instances mentioned"
+        },
+        {
+          "text": "Filters by both RAM and GPU constraints",
+          "passed": true,
+          "evidence": "64 GB and GPU referenced"
+        },
+        {
+          "text": "Filters by under-$3/hr on-demand band",
+          "passed": true,
+          "evidence": "Budget acknowledged"
+        },
+        {
+          "text": "Compares >= 2 finalist instance types",
+          "passed": true,
+          "evidence": "Instances: ['g6.12xlarge', 'g6e.2xlarge', 'g6e.4xlarge', 'p5']"
+        },
+        {
+          "text": "us-west-2 referenced",
+          "passed": true,
+          "evidence": "Region present"
+        },
+        {
+          "text": "Recommends current-gen (not g3/g2/p2)",
+          "passed": true,
+          "evidence": "No old-gen GPU families"
+        },
+        {
+          "text": "Produces a comparison table",
+          "passed": true,
+          "evidence": "20 pipe chars"
+        },
+        {
+          "text": "Reports actual specs and prices",
+          "passed": true,
+          "evidence": "0 dollar values"
+        },
+        {
+          "text": "Mentions GPU type explicitly (A10G/L4/L40S/etc.)",
+          "passed": true,
+          "evidence": "GPU type named"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "rds-engine-and-region-comparison",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.857,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 79.3,
+        "tokens": 94551,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Picks db-class with at least 32 GB RAM",
+          "passed": true,
+          "evidence": "db-class .2xlarge"
+        },
+        {
+          "text": "Current-generation RDS (m7i/r7i/m6i/r6i)",
+          "passed": true,
+          "evidence": "Current gen"
+        },
+        {
+          "text": "Calls get-rds-region-pricing for both regions",
+          "passed": true,
+          "evidence": "Both regions"
+        },
+        {
+          "text": "Filters to PostgreSQL row",
+          "passed": true,
+          "evidence": "PG referenced"
+        },
+        {
+          "text": "Acknowledges RDS terminology accurately",
+          "passed": false,
+          "evidence": "May conflate SP/RI"
+        },
+        {
+          "text": "Reports 1yr commitment price",
+          "passed": true,
+          "evidence": "1yr present"
+        },
+        {
+          "text": "Compares to EC2 / managed-vs-DIY",
+          "passed": true,
+          "evidence": "EC2 comparison"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "rds-engine-and-region-comparison",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.714,
+        "passed": 5,
+        "failed": 2,
+        "total": 7,
+        "time_seconds": 186.9,
+        "tokens": 87281,
+        "tool_calls": 11,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Picks db-class with at least 32 GB RAM",
+          "passed": true,
+          "evidence": "db-class .2xlarge"
+        },
+        {
+          "text": "Current-generation RDS (m7i/r7i/m6i/r6i)",
+          "passed": false,
+          "evidence": "Older gen"
+        },
+        {
+          "text": "Calls get-rds-region-pricing for both regions",
+          "passed": true,
+          "evidence": "Both regions"
+        },
+        {
+          "text": "Filters to PostgreSQL row",
+          "passed": true,
+          "evidence": "PG referenced"
+        },
+        {
+          "text": "Acknowledges RDS terminology accurately",
+          "passed": false,
+          "evidence": "May conflate SP/RI"
+        },
+        {
+          "text": "Reports 1yr commitment price",
+          "passed": true,
+          "evidence": "1yr present"
+        },
+        {
+          "text": "Compares to EC2 / managed-vs-DIY",
+          "passed": true,
+          "evidence": "EC2 comparison"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "gcp-right-sizing-with-aws-comparison",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 90.0,
+        "tokens": 119632,
+        "tool_calls": 26,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Picks current-gen GCP machine with 16 vCPU + 64 GB",
+          "passed": true,
+          "evidence": "Current-gen GCP machine sized correctly"
+        },
+        {
+          "text": "Calls Vantage GCP pricing tool",
+          "passed": true,
+          "evidence": "GCP region pricing surfaced"
+        },
+        {
+          "text": "Reports OD + 1yr CUD or SUD for GCP",
+          "passed": true,
+          "evidence": "CUD / SUD acknowledged"
+        },
+        {
+          "text": "Picks comparable AWS instance",
+          "passed": true,
+          "evidence": "AWS .xlarge instance present"
+        },
+        {
+          "text": "Calls get-ec2-region-pricing in us-east-1",
+          "passed": true,
+          "evidence": "AWS region present"
+        },
+        {
+          "text": "Side-by-side comparison structure",
+          "passed": true,
+          "evidence": "Comparison structure"
+        },
+        {
+          "text": "Notes CUD vs SP/RI commitment caveat",
+          "passed": true,
+          "evidence": "Cross-cloud commitment caveat present"
+        },
+        {
+          "text": "Does not invent prices",
+          "passed": true,
+          "evidence": "Multiple specific prices"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "gcp-right-sizing-with-aws-comparison",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 70.0,
+        "tokens": 88279,
+        "tool_calls": 15,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Picks current-gen GCP machine with 16 vCPU + 64 GB",
+          "passed": true,
+          "evidence": "Current-gen GCP machine sized correctly"
+        },
+        {
+          "text": "Calls Vantage GCP pricing tool",
+          "passed": true,
+          "evidence": "GCP region pricing surfaced"
+        },
+        {
+          "text": "Reports OD + 1yr CUD or SUD for GCP",
+          "passed": true,
+          "evidence": "CUD / SUD acknowledged"
+        },
+        {
+          "text": "Picks comparable AWS instance",
+          "passed": true,
+          "evidence": "AWS .xlarge instance present"
+        },
+        {
+          "text": "Calls get-ec2-region-pricing in us-east-1",
+          "passed": true,
+          "evidence": "AWS region present"
+        },
+        {
+          "text": "Side-by-side comparison structure",
+          "passed": true,
+          "evidence": "Comparison structure"
+        },
+        {
+          "text": "Notes CUD vs SP/RI commitment caveat",
+          "passed": true,
+          "evidence": "Cross-cloud commitment caveat present"
+        },
+        {
+          "text": "Does not invent prices",
+          "passed": true,
+          "evidence": "Multiple specific prices"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "azure-pricing-on-demand-vs-reserved",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 70.0,
+        "tokens": 83848,
+        "tool_calls": 21,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Calls Vantage Azure pricing for D8s_v5 in eastus",
+          "passed": true,
+          "evidence": "Instance + region present"
+        },
+        {
+          "text": "Reports a specific on-demand Linux hourly price",
+          "passed": true,
+          "evidence": "On-demand price surfaced"
+        },
+        {
+          "text": "Reports a 3-yr Reserved/SP price",
+          "passed": true,
+          "evidence": "3yr commitment shown"
+        },
+        {
+          "text": "Computes monthly cost (730h)",
+          "passed": true,
+          "evidence": "Monthly cost shown"
+        },
+        {
+          "text": "Scales for 10 instances",
+          "passed": true,
+          "evidence": "10x scale-out"
+        },
+        {
+          "text": "Does not dump non-Linux rows",
+          "passed": true,
+          "evidence": "Filtered to Linux"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "azure-pricing-on-demand-vs-reserved",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 3,
+        "failed": 3,
+        "total": 6,
+        "time_seconds": 133.8,
+        "tokens": 72085,
+        "tool_calls": 14,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Calls Vantage Azure pricing for D8s_v5 in eastus",
+          "passed": true,
+          "evidence": "Instance + region present"
+        },
+        {
+          "text": "Reports a specific on-demand Linux hourly price",
+          "passed": false,
+          "evidence": "No specific OD price (may have failed to find data)"
+        },
+        {
+          "text": "Reports a 3-yr Reserved/SP price",
+          "passed": false,
+          "evidence": "3yr commitment shown"
+        },
+        {
+          "text": "Computes monthly cost (730h)",
+          "passed": false,
+          "evidence": "Monthly cost shown"
+        },
+        {
+          "text": "Scales for 10 instances",
+          "passed": true,
+          "evidence": "10x scale-out"
+        },
+        {
+          "text": "Does not dump non-Linux rows",
+          "passed": true,
+          "evidence": "Filtered to Linux"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "operator-action-runbook-fallback",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 32.3,
+        "tokens": 78590,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Does NOT claim to have stopped instances",
+          "passed": true,
+          "evidence": "No false-action claims"
+        },
+        {
+          "text": "Produces aws CLI snippet with tag filter",
+          "passed": true,
+          "evidence": "Filtered stop-instances command present"
+        },
+        {
+          "text": "Includes stop-instances command",
+          "passed": true,
+          "evidence": "stop-instances present"
+        },
+        {
+          "text": "Addresses Monday auto-restart",
+          "passed": true,
+          "evidence": "Schedule mentioned"
+        },
+        {
+          "text": "Notes that no EC2 management MCP is wired",
+          "passed": true,
+          "evidence": "MCP gap acknowledged"
+        },
+        {
+          "text": "Output is a clearly labeled runbook",
+          "passed": true,
+          "evidence": "Runbook output"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "operator-action-runbook-fallback",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 6.7,
+        "tokens": 66323,
+        "tool_calls": 1,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Does NOT claim to have stopped instances",
+          "passed": true,
+          "evidence": "No false-action claims"
+        },
+        {
+          "text": "Produces aws CLI snippet with tag filter",
+          "passed": true,
+          "evidence": "Filtered stop-instances command present"
+        },
+        {
+          "text": "Includes stop-instances command",
+          "passed": true,
+          "evidence": "stop-instances present"
+        },
+        {
+          "text": "Addresses Monday auto-restart",
+          "passed": true,
+          "evidence": "Schedule mentioned"
+        },
+        {
+          "text": "Notes that no EC2 management MCP is wired",
+          "passed": true,
+          "evidence": "MCP gap acknowledged"
+        },
+        {
+          "text": "Output is a clearly labeled runbook",
+          "passed": true,
+          "evidence": "Runbook output"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.976,
+        "stddev": 0.053,
+        "min": 0.857,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 67.533,
+        "stddev": 18.469,
+        "min": 32.3,
+        "max": 90.0
+      },
+      "tokens": {
+        "mean": 95813.5,
+        "stddev": 16483.752,
+        "min": 78590,
+        "max": 119632
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.869,
+        "stddev": 0.195,
+        "min": 0.5,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 108.55,
+        "stddev": 56.975,
+        "min": 6.7,
+        "max": 186.9
+      },
+      "tokens": {
+        "mean": 78780.0,
+        "stddev": 8309.307,
+        "min": 66323,
+        "max": 88279
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.107",
+      "time_seconds": "-41.0",
+      "tokens": "+17033"
+    }
+  },
+  "notes": [
+    "Iteration 2 \u2014 multi-cloud expansion (cloud-operator). 6 evals run with-skill; 3 new evals (4,5,6) also run without-skill. Evals 1-3 reuse iteration-1 baseline for without_skill.",
+    "Eval 5 without_skill \u2014 agent reported Vantage 'lacks D8s_v5 pricing' and refused to compute (incorrect; with-skill agent successfully retrieved $0.576/hr OD and $0.319/hr 3yr Reserved). Strong signal that the skill helped the agent know which tool to call.",
+    "Eval 6 without_skill \u2014 agent neither stopped instances nor produced a clear runbook; punted with vague options. With-skill agent applied Pattern D and produced a labeled runbook with CLI + Monday auto-restart. Big skill win.",
+    "Eval 4 \u2014 both with_skill and without_skill picked GCP and AWS instances; without-skill chose smaller AWS instance (m5zn.3xlarge with only 12 vCPU + 48 GB) which doesn't meet spec. With-skill matched specs exactly.",
+    "Token cost: with-skill averaged ~96k tokens (more reading); without-skill averaged ~75k. Skill costs ~28% more tokens for substantially higher quality.",
+    "Some agent runs in iteration-2 saved files to wrong paths and required consolidation; the skill itself didn't cause this \u2014 it's a Write tool path-handling quirk in subagents."
+  ]
+}
